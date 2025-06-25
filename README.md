@@ -1,15 +1,24 @@
-:movie_camera: VIDEO TUTORIAL
-:link: ¡VER ANTES DE INICIAR!:
+Video en windows: 
     https://youtu.be/F4KcMFW8g7I?si=GQR5Xg4tJTRt7iBF
+
+Para Ubuntu (terminal): 
+    
+    sudo apt update
+    sudo apt install git
+    apt-get install git
+    sudo snap install code --classic
+
 
 
 :wrench: CONFIGURACIÓN INICIAL (solo una vez por usuario)
-  Antes de hacer cualquier operación en Git, configura tu identidad:
+  Antes de hacer cualquier operación en Git, configura tu identidad en la terminal de visualstudiocode:
 
 
     git config --global user.name "Tu Nombre"
 
     git config --global user.email "tucorreo@example.com"
+
+Con tus datos reales.
 
 :white_check_mark: Esto garantiza que los commits aparezcan con tu nombre.
 
@@ -17,37 +26,10 @@
 
 
     git clone https://github.com/navimm-0/WEB.git
-    cd PFEPI
+
+    cd /var/www/html/4CV3/
 
  Esto crea una copia local del repositorio para trabajar desde tu equipo.
-
-:file_folder: ESTRUCTURA OFICIAL DEL PROYECTO
-
-    PFEPI/
-      ├── index.html         ← Archivo principal del sitio web
-
-      ├── CSS/               ← Archivos de estilos (style.css, etc.)
-
-      ├── HTML/              ← Páginas HTML adicionales
-
-      ├── SCRIPT/            ← Archivos JavaScript (funcionalidad)
-  
-      └── IMG/               ← Imágenes y recursos gráficos
-
-Crear esta estructura:
-
-    touch index.html
-
-    mkdir CSS HTML SCRIPT IMG
-
-Si alguna carpeta está vacía y deseas que Git la incluya:
-
-
-        New-Item -Path .\CSS\.gitkeep -ItemType File
-        New-Item -Path .\HTML\.gitkeep -ItemType File
-        New-Item -Path .\SCRIPT\.gitkeep -ItemType File
-        New-Item -Path .\IMG\.gitkeep -ItemType File
-
 
 Git no guarda carpetas vacías a menos que tengan al menos un archivo (como .gitkeep).
 
@@ -86,6 +68,8 @@ Guarda los cambios con un mensaje:
   Antes de comenzar a trabajar cada día, sincroniza tu repositorio local con los cambios que otros hayan hecho:
 
     git pull origin main
+
+// ya no necesitas saber nada más apartir de aquí
 
 :x: ELIMINAR ARCHIVOS O CARPETAS
 
