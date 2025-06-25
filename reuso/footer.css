@@ -1,0 +1,83 @@
+footer.pie-pagina {
+    background-color: #1a1a1a;
+    color: #ccc;
+    padding: 3rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    margin-top: 3rem; 
+    border-radius: 2px;
+
+}
+
+.footer-contenido {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;          
+    margin: 0 auto;       
+    padding: 0 3rem;    
+}
+
+.footer-col {
+    flex: 1 1 220px;
+    min-width: 200px;
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    color: #fff;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.3rem;
+}
+
+.footer-col p,
+.footer-col li,
+.footer-col a {
+    color: #bbb;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.footer-col a:hover {
+    color: #fff;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.redes-sociales a {
+    display: inline-block;
+    margin-right: 1rem;
+    color: #8ab4f8;
+    text-decoration: none;
+}
+
+.redes-sociales a:hover {
+    color: #ffffff;
+}
+
+.footer-copy {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #888;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+.footer-contenido a:hover {
+    color: var(--color-acento);
+    transition: color 0.3s ease;
+}

@@ -1,0 +1,54 @@
+main.contenido-admin {
+    padding: 3rem;
+    color: #ddd;
+    background-color: #121212;
+    min-height: 80vh;
+    font-family: 'Inter', sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.tarjetas-panel {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tarjeta {
+    background-color: #1f1f1f;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.tarjeta h3 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.tarjeta p {
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.tarjeta .boton {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tarjeta .boton:hover {
+    background-color: #666;
+}
