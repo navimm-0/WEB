@@ -39,8 +39,8 @@
             </div>
             <div class="tarjeta">
                 <h3>Empleados</h3>
-                <p>Administra el listado de empleados contratados</p>
-                <a href="empleados.php" class="boton">Ver Empleados</a>
+                <p>Administra el listado de empleados  contratados</p>
+                <a href="empleados.php" class="boton">Ver Emple ados</a>
             </div>
         </section>
     </main>
