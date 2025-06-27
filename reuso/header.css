@@ -1,32 +1,60 @@
 .barra-superior {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #121212;
-    color: white;
-    z-index: 9999;
+    width: 90%;
+    margin: 2rem auto;
+    background-color: #1e1e1e;
+    border-radius: 50px;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bienvenida {
+  color: white;
+  margin-right: 1rem;
+  font-weight: bold;
 }
 
 .contenedor-header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
+    align-items: center;
+}
+
+.logo-area {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logo-area .gg {
+    background-color: #333;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    margin-right: 0.5rem;
+}
+
+.logo-area .records {
+    color: #9e9e9e;
+    letter-spacing: 2px;
 }
 
 .nav-header a {
-    color: white;
+    color: #ccc;
     text-decoration: none;
-    margin-left: 1rem;
+    margin: 0 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .nav-header a:hover {
-    text-decoration: underline;
+    color: #fff;
+}
+.logo-header {
+    height: 40px;
+    margin-right: 0.6rem;
+    vertical-align: middle;
 }
