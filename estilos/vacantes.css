@@ -6,6 +6,10 @@ body {
     padding: 2rem;
 }
 
+h1 {
+    text-align: center;
+}
+
 .vacantes-lista {
     display: flex;
     flex-wrap: wrap;
@@ -15,14 +19,14 @@ body {
 }
 
 .vacante-card {
-    background: linear-gradient(to bottom right, #1a1a1a, #2a2a2a);
-    border: 1px solid #333;
-    border-radius: 16px;
+    background: linear-gradient(to right, #1a1a1a, #262626); /* mismo gradiente que .contenedor-index */
+    border-radius: 20px;
     padding: 2rem;
     width: 100%;
     max-width: 480px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
     transition: transform 0.3s ease;
+    text-align: left;
 }
 
 .vacante-card:hover {
@@ -30,22 +34,22 @@ body {
 }
 
 .vacante-card h2 {
-    font-size: 1.6rem;
-    color: #ffffff;
+    font-size: 1.8rem;
     margin-bottom: 0.8rem;
+    color: #ffffff;
 }
 
 .vacante-card p {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: #d0d0d0;
-    margin-bottom: 1.2rem;
-    line-height: 1.5;
+    margin-bottom: 1rem;
+    line-height: 1.6;
 }
 
 .vacante-card ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 1.2rem;
+    margin-bottom: 1.2rem;
 }
 
 .vacante-card ul li {
@@ -54,21 +58,22 @@ body {
     color: #cccccc;
 }
 
-/* Botón aplicar */
-.vacante-card .boton {
+/* Botón 'Aplicar' igual que en index */
+.boton {
     display: inline-block;
     background-color: #3a3a3a;
     color: #ffffff;
-    padding: 0.9rem 2rem;
+    padding: 1rem 2.5rem;
+    margin-top: 1rem;
     border: none;
     border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: background-color 0.3s ease, transform 0.2s;
 }
 
-.vacante-card .boton:hover {
+.boton:hover {
     background-color: #555;
     transform: translateY(-3px);
 }

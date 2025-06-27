@@ -49,48 +49,49 @@ $resultado = $conn->query($sql);
             </nav>
         </div>
     </header>
-<main class="contenido-admin">
-    <h1>Vacantes Publicadas</h1>
+    <main class="contenido-admin">
+        <h1>Vacantes Publicadas</h1>
 
-    <div class="acciones">
-        <a href="panel.php" class="boton boton-volver">Volver al Panel</a>
-    </div>
+        <div class="acciones">
+            <a href="panel.php" class="boton boton-volver">Volver al Panel</a>
+        </div>
 
-    <table class="tabla-vacantes">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Criterio Principal</th>
-                <th>Estado</th>
-                <th>Creación</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($resultado->num_rows > 0): ?>
-                <?php while ($fila = $resultado->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($fila['titulo']); ?></td>
-                        <td><?php echo htmlspecialchars($fila['criterio_1']); ?></td>
-                        <td><?php echo ucfirst($fila['estado'] ?? 'desconocido'); ?></td>
-                        <td><?php echo htmlspecialchars($fila['fecha_creacion']); ?></td>
-                        <td class="acciones">
-                            <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
-                            <form method="POST" action="../scripts/eliminar_vacante.php" onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
-                                <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
-                                <button type="submit" class="boton boton-secundario">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
+        <table class="tabla-vacantes">
+            <thead>
                 <tr>
-                    <td colspan="5" class="mensaje-info">Actualmente no hay vacantes registradas.</td>
+                    <th>Título</th>
+                    <th>Criterio Principal</th>
+                    <th>Estado</th>
+                    <th>Creación</th>
+                    <th>Acciones</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                <?php if ($resultado->num_rows > 0): ?>
+                    <?php while ($fila = $resultado->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($fila['titulo']); ?></td>
+                            <td><?php echo htmlspecialchars($fila['criterio_1']); ?></td>
+                            <td><?php echo ucfirst($fila['estado'] ?? 'desconocido'); ?></td>
+                            <td><?php echo htmlspecialchars($fila['fecha_creacion']); ?></td>
+                            <td class="acciones">
+                                <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
+                                <form method="POST" action="../scripts/eliminar_vacante.php"
+                                    onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
+                                    <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
+                                    <button type="submit" class="boton boton-secundario">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="mensaje-info">Actualmente no hay vacantes registradas.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </main>
 
 
     <footer class="pie-pagina">

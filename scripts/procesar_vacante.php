@@ -10,25 +10,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $titulo = trim($_POST['titulo'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
-    // Criterios específicos
+    // Recolección y sanitización de criterios
     $criterio_1 = $_POST['criterio_1'] ?? '';
     $criterio_2 = $_POST['criterio_2'] ?? '';
-    $criterio_3 = $_POST['criterio_3'] ?? '';
+    $criterio_3 = is_numeric($_POST['criterio_3']) ? intval($_POST['criterio_3']) : null; // Años experiencia
     $criterio_4 = $_POST['criterio_4'] ?? '';
     $criterio_5 = $_POST['criterio_5'] ?? '';
     $criterio_6 = $_POST['criterio_6'] ?? '';
     $criterio_7 = $_POST['criterio_7'] ?? '';
     $criterio_8 = $_POST['criterio_8'] ?? '';
-    $criterio_9 = $_POST['criterio_9'] ?? '';
-    $criterio_10 = $_POST['criterio_10'] ?? '';
+    $criterio_9 = is_numeric($_POST['criterio_9']) ? intval($_POST['criterio_9']) : null; // Edad mínima
+    $criterio_10 = is_numeric($_POST['criterio_10']) ? intval($_POST['criterio_10']) : null; // Sueldo
     $criterio_11 = $_POST['criterio_11'] ?? '';
     $criterio_12 = $_POST['criterio_12'] ?? '';
 
-    // Validación básica
-    if (empty($titulo) || empty($descripcion) || empty($criterio_1) || empty($criterio_2) ||
-        $criterio_3 === '' || empty($criterio_4) || empty($criterio_5) || empty($criterio_6) ||
-        empty($criterio_7) || empty($criterio_8) || $criterio_9 === '' || $criterio_10 === '' ||
-        empty($criterio_11) || empty($criterio_12)) {
+    // Validación obligatoria
+    if (
+        empty($titulo) || empty($descripcion) ||
+        empty($criterio_1) || empty($criterio_2) || $criterio_3 === null ||
+        empty($criterio_4) || empty($criterio_5) || empty($criterio_6) || empty($criterio_7) ||
+        empty($criterio_8) || $criterio_9 === null || $criterio_10 === null ||
+        empty($criterio_11) || empty($criterio_12)
+    ) {
         header("Location: ../admin/crear_vacante.php?error=Faltan+campos+obligatorios");
         exit();
     }
@@ -46,25 +49,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
- $stmt->bind_param(
-    "ssssssssssssss", // 14 letras 's' → 14 strings
-    $titulo,
-    $descripcion,
-    $criterio_1,
-    $criterio_2,
-    $criterio_3,
-    $criterio_4,
-    $criterio_5,
-    $criterio_6,
-    $criterio_7,
-    $criterio_8,
-    $criterio_9,
-    $criterio_10,
-    $criterio_11,
-    $criterio_12
-);
-
-
+    $stmt->bind_param(
+        "sssissssssiiis", // tipos correctos: s = string, i = int
+        $titulo,
+        $descripcion,
+        $criterio_1,
+        $criterio_2,
+        $criterio_3,
+        $criterio_4,
+        $criterio_5,
+        $criterio_6,
+        $criterio_7,
+        $criterio_8,
+        $criterio_9,
+        $criterio_10,
+        $criterio_11,
+        $criterio_12
+    );
 
     if ($stmt->execute()) {
         header("Location: ../admin/panel.php?exito=Vacante+creada+correctamente");
