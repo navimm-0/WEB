@@ -16,7 +16,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $id = intval($_GET['id']);
 $error = "";
 
-// Obtener datos actuales de la vacante
 $sql = "SELECT * FROM vacantes WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
