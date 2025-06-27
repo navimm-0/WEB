@@ -1,4 +1,4 @@
-body {
+body.index-body {
     background-color: #0d0d0d;
     color: #f5f5f5;
     font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
@@ -6,69 +6,72 @@ body {
     padding: 2rem;
 }
 
-.vacantes-lista {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    padding: 2rem 0;
-}
-
-.vacante-card {
-    background: linear-gradient(to bottom right, #1a1a1a, #2a2a2a);
-    border: 1px solid #333;
-    border-radius: 16px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+/* Contenedor principal con tarjeta destacada */
+.contenedor-index.grande {
+    max-width: 850px;
+    margin: 4rem auto;
+    background: linear-gradient(to right, #1a1a1a, #262626);
+    padding: 3rem 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+    text-align: center;
     transition: transform 0.3s ease;
 }
 
-.vacante-card:hover {
+.contenedor-index.efecto:hover {
     transform: scale(1.02);
 }
 
-.vacante-card h2 {
-    font-size: 1.6rem;
+/* Tipografía y títulos */
+.titulo-principal {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
     color: #ffffff;
-    margin-bottom: 0.8rem;
 }
 
-.vacante-card p {
-    font-size: 1rem;
+.descripcion {
+    font-size: 1.15rem;
     color: #d0d0d0;
-    margin-bottom: 1.2rem;
-    line-height: 1.5;
+    margin: 1rem 0;
+    line-height: 1.7;
 }
 
-.vacante-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.2rem;
+/* Botones */
+.botones {
+    margin-top: 2.5rem;
 }
 
-.vacante-card ul li {
-    font-size: 0.95rem;
-    margin-bottom: 0.4rem;
-    color: #cccccc;
-}
-
-/* Botón aplicar */
-.vacante-card .boton {
+.boton {
     display: inline-block;
     background-color: #3a3a3a;
     color: #ffffff;
-    padding: 0.9rem 2rem;
+    padding: 1rem 2.5rem;
+    margin: 0.8rem;
     border: none;
     border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: background-color 0.3s ease, transform 0.2s;
 }
 
-.vacante-card .boton:hover {
+.boton:hover {
     background-color: #555;
     transform: translateY(-3px);
+}
+
+.boton-secundario {
+    background-color: #2a2a2a;
+}
+
+.boton.grande {
+    font-size: 1.2rem;
+}
+
+/* Mensaje de bienvenida */
+.bienvenida {
+    color: #cccccc;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    font-size: 1rem;
 }
