@@ -1,0 +1,26 @@
+.contenido-usuario {
+    padding: 3rem;
+    text-align: center;
+}
+
+.tarjetas-usuario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.tarjeta-opcion {
+    background-color: #1f1f1f;
+    padding: 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 0 12px rgba(255,255,255,0.05);
+    transition: transform 0.2s ease;
+}
+
+.tarjeta-opcion:hover {
+    background-color: #292929;
+    transform: scale(1.03);
+}

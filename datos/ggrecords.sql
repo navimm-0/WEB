@@ -12,3 +12,15 @@ CREATE TABLE IF NOT EXISTS usuarios (
     rol ENUM('usuario', 'admin') DEFAULT 'usuario',
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS vacantes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT NOT NULL,
+    departamento VARCHAR(100) NOT NULL,
+    fecha_publicacion DATE NOT NULL,
+    fecha_cierre DATE NOT NULL,
+    estado ENUM('activa', 'inactiva') DEFAULT 'activa',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
