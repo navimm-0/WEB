@@ -1,0 +1,50 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #1f1f1f, #3b3b3b);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.contenido-usuario {
+    padding: 2rem;
+    text-align: center;
+}
+
+.contenido-usuario h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.opciones-usuario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: auto;
+}
+
+.tarjeta-opcion {
+    background-color: #2c2c2c;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    border: 1px solid #444;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.tarjeta-opcion:hover {
+    background-color: #444;
+    transform: scale(1.03);
+}
+
+.tarjeta-opcion h2 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.tarjeta-opcion p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+}
