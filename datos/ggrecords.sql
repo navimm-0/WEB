@@ -13,19 +13,28 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS Vacante (
+DROP TABLE IF EXISTS Vacante;
+
+CREATE TABLE Vacante (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
-    departamento VARCHAR(100) NOT NULL,
-    palabras_clave TEXT, -- visible solo para el admin
-    conocimientos TEXT NOT NULL,
-    sueldo VARCHAR(100) NOT NULL,
-    horario VARCHAR(100) NOT NULL,
-    fecha_publicacion DATE NOT NULL,
-    fecha_cierre DATE NOT NULL,
-    estado ENUM('activa', 'inactiva') NOT NULL DEFAULT 'activa',
+
+    criterio_1 VARCHAR(50) NOT NULL,   
+    criterio_2 VARCHAR(100) NOT NULL,    
+    criterio_3 INT NOT NULL,             
+    criterio_4 ENUM('Sí', 'No') NOT NULL,   
+    criterio_5 VARCHAR(20) NOT NULL,     
+    criterio_6 VARCHAR(20) NOT NULL,     
+    criterio_7 VARCHAR(50) NOT NULL,     
+    criterio_8 ENUM('Sí', 'No') NOT NULL,   
+    criterio_9 INT NOT NULL,            
+    criterio_10 INT NOT NULL,           
+    criterio_11 ENUM('Sí', 'No') NOT NULL, 
+    criterio_12 ENUM('Sí', 'No') NOT NULL,  
+
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 
