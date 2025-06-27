@@ -31,7 +31,7 @@ $datos = $resultado->fetch_assoc();
     <title>Mi Perfil – GG Records</title>
     <link rel="stylesheet" href="../reuso/header.css">
     <link rel="stylesheet" href="../reuso/footer.css">
-    <link rel="stylesheet" href="../estilos/perfilUsuario.css"> 
+    <link rel="stylesheet" href="../estilos/perfil_usuarioo.css"> 
 </head>
 <body>
 
