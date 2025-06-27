@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["cv"])) {
             $rutaFinal = $carpetaDestino . $nombreSeguro;
 
             if (move_uploaded_file($tmpArchivo, $rutaFinal)) {
-                $stmt = $conn->prepare("INSERT INTO postulaciones (usuario_id, vacante_id, nombre_archivo) VALUES (?, ?, ?)");
-                $stmt->bind_param("iis", $usuario_id, $id_vacante, $nombreSeguro);
+$stmt = $conn->prepare("INSERT INTO postulaciones (id_usuario, id_vacante, cv_pdf) VALUES (?, ?, ?)");
+$stmt->bind_param("iis", $usuario_id, $id_vacante, $nombreSeguro);
                 $stmt->execute();
                 $stmt->close();
 
@@ -68,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["cv"])) {
     <title>Subir CV - GG Records</title>
     <link rel="stylesheet" href="../reuso/header.css">
     <link rel="stylesheet" href="../reuso/footer.css">
+    <link rel="stylesheet" href="../estilos/subir_cv.css">
+
 </head>
 <body>
 <header class="barra-superior">
