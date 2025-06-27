@@ -36,5 +36,17 @@ CREATE TABLE Vacante (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS postulaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_vacante INT NOT NULL,
+    fecha_postulacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'aceptada', 'rechazada') DEFAULT 'pendiente',
+    cv_pdf VARCHAR(255), -- ← aquí se guarda la ruta al archivo PDF
+    observaciones TEXT,
+
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_vacante) REFERENCES Vacante(id) ON DELETE CASCADE
+);
 
 
