@@ -20,7 +20,10 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 </head>
 
 <body>
-   <?php session_start(); ?>
+   <?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+ ?>
 <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
     <div class="contenedor-header">
         <!-- Logotipo textual al estilo del index -->
