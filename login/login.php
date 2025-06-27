@@ -9,8 +9,6 @@ if (isset($_SESSION['rol'])) {
     exit();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

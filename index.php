@@ -4,7 +4,6 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>GG Records – Bienvenido</title>
@@ -21,20 +20,23 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
                 <span class="records">RECORDS</span>
             </div>
             <nav class="nav-header">
-  <?php if (isset($_SESSION['usuario'])): ?>
-    <span class="bienvenida">
-      Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
-      (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
-    </span>
-    <a href="usuario/vacantes.php">Vacantes</a>
-    <a href="scripts/logout.php">Cerrar sesión</a>
-  <?php else: ?>
-    <a href="login/login.php">Iniciar sesión</a>
-    <a href="login/register.php">Registro</a>
-    <a href="usuario/vacantes.php">Vacantes</a>
-  <?php endif; ?>
-</nav>
-
+                <?php if (isset($_SESSION['usuario'])): ?>
+                    <span class="bienvenida">
+                        Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+                        (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
+                    </span>
+                    <?php if ($_SESSION['rol'] === 'admin'): ?>
+                        <a href="admin/panel.php">Panel</a>
+                    <?php else: ?>
+                        <a href="usuario/vacantes.php">Vacantes</a>
+                    <?php endif; ?>
+                    <a href="scripts/logout.php">Cerrar sesión</a>
+                <?php else: ?>
+                    <a href="login/login.php">Iniciar sesión</a>
+                    <a href="login/register.php">Registro</a>
+                    <a href="usuario/vacantes.php">Vacantes</a>
+                <?php endif; ?>
+            </nav>
         </div>
     </header>
 
@@ -49,12 +51,17 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
             Este portal es exclusivo para gestionar nuestras <strong>vacantes internas</strong>. Aquí podrás postularte,
             dar seguimiento a tu solicitud y formar parte de un equipo apasionado por el ritmo y la innovación.
         </p>
+
         <div class="botones">
             <?php if (!isset($_SESSION['usuario'])): ?>
                 <a href="login/login.php" class="boton grande">Iniciar Sesión</a>
                 <a href="login/register.php" class="boton boton-secundario grande">Registrarse</a>
             <?php else: ?>
-                <a href="usuario/vacantes.php" class="boton grande">Ir a Vacantes</a>
+                <?php if ($_SESSION['rol'] === 'admin'): ?>
+                    <a href="admin/panel.php" class="boton grande">Ir al Panel</a>
+                <?php else: ?>
+                    <a href="usuario/vacantes.php" class="boton grande">Ir a Vacantes</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
@@ -63,8 +70,7 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
         <div class="footer-contenido">
             <div class="footer-col">
                 <h4>GG Records</h4>
-                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
-                </p>
+                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.</p>
             </div>
 
             <div class="footer-col">
@@ -100,5 +106,4 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
         </div>
     </footer>
 </body>
-
 </html>
