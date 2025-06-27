@@ -46,7 +46,7 @@ $resultado = $conn->query($sql);
                 <h3><?php echo htmlspecialchars($fila['titulo']); ?></h3>
                 <p><strong>Descripción:</strong> <?php echo htmlspecialchars($fila['descripcion']); ?></p>
                 <p><strong>Sueldo mensual:</strong> $<?php echo number_format($fila['criterio_10'], 2); ?></p>
-                <form action="postularse.php" method="POST">
+                <form action="subir_cv.php" method="POST">
                     <input type="hidden" name="id_vacante" value="<?php echo $fila['id']; ?>">
                     <button type="submit">Aplicar</button>
                 </form>
