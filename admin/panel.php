@@ -22,7 +22,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
         <div class="contenedor-header">
             <img src="../imagenes/logo.png" alt="GG Records" class="logo-header">
             <nav class="nav-header">
-                <a href="panel.php">Inicio</a>
+                <a href="../index.php">Inicio</a>
                 <a href="vacantes.php">Vacantes</a>
                 <a href="postulaciones.php">Postulaciones</a>
                 <a href="empleados.php">Empleados</a>
@@ -40,12 +40,12 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
             <div class="tarjeta">
                 <h3>Vacantes</h3>
                 <p>Crear o modificar vacantes internas.</p>
-                <a href="crear_vacantes.php" class="boton">Gestionar</a>
+                <a href="crear_vacante.php" class="boton">Gestionar</a>
             </div>
             <div class="tarjeta">
                 <h3>Postulaciones</h3>
                 <p>Revisa quién ha aplicado a las vacantes.</p>
-                <a href="postulaciones.php" class="boton">Ver Postulaciones</a>
+                <a href="gestionar_vacantes.php" class="boton">Ver Postulaciones</a>
             </div>
             <div class="tarjeta">
                 <h3>Empleados</h3>

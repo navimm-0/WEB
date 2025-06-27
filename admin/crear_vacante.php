@@ -1,36 +1,8 @@
 <?php
-require_once("../scripts/verificar_sesion.php");
-
-if ($_SESSION['rol'] !== 'admin') {
+session_start();
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: ../index.php");
     exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once("../scripts/conexion.php");
-
-    $titulo = trim($_POST['titulo']);
-    $descripcion = trim($_POST['descripcion']);
-    $departamento = trim($_POST['departamento']);
-    $fecha_publicacion = $_POST['fecha_publicacion'];
-    $fecha_cierre = $_POST['fecha_cierre'];
-    $estado = $_POST['estado'];
-
-    // Validaciones básicas
-    if (!$titulo || !$descripcion || !$departamento || !$fecha_publicacion || !$fecha_cierre || !$estado) {
-        $error = "Por favor completa todos los campos.";
-    } else {
-        $sql = "INSERT INTO vacantes (titulo, descripcion, departamento, fecha_publicacion, fecha_cierre, estado) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssss", $titulo, $descripcion, $departamento, $fecha_publicacion, $fecha_cierre, $estado);
-
-        if ($stmt->execute()) {
-            header("Location: gestionar_vacantes.php");
-            exit();
-        } else {
-            $error = "Error al guardar la vacante.";
-        }
-    }
 }
 ?>
 
@@ -39,15 +11,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Crear Vacante – GG Records</title>
+    <link rel="stylesheet" href="../reuso/header.css">
+    <link rel="stylesheet" href="../reuso/footer.css">
     <link rel="stylesheet" href="../estilos/admin.css">
 </head>
 <body>
+    <header class="barra-superior">
+        <div class="contenedor-header">
+            <img src="../imagenes/logo.png" alt="GG Records" class="logo-header">
+            <nav class="nav-header">
+                <a href="panel.php">Inicio</a>
+                <a href="vacantes.php">Vacantes</a>
+                <a href="postulaciones.php">Postulaciones</a>
+                <a href="empleados.php">Empleados</a>
+                <a href="perfil.php">Perfil</a>
+                <a href="../scripts/logout.php">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="contenido-admin">
         <h1>Crear Nueva Vacante</h1>
-        <?php if (!empty($error)): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
+
+        <?php if (isset($_GET['error'])): ?>
+            <div class="error"><?php echo htmlspecialchars($_GET['error']); ?></div>
         <?php endif; ?>
-        <form method="POST" action="crear_vacante.php">
+
+        <form method="POST" action="../scripts/procesar_vacante.php" class="formulario-vacante">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" required>
 
@@ -69,9 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="inactiva">Inactiva</option>
             </select>
 
-            <button type="submit" class="boton">Guardar</button>
-            <a href="gestionar_vacantes.php" class="boton">Cancelar</a>
+            <div class="acciones">
+                <button type="submit" class="boton">Guardar</button>
+                <a href="gestionar_vacantes.php" class="boton boton-secundario">Cancelar</a>
+            </div>
         </form>
     </main>
+
+    <footer class="pie-pagina">
+        <?php include '../reuso/footer.php'; ?>
+    </footer>
 </body>
 </html>
