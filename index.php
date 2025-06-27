@@ -1,5 +1,5 @@
 <?php
-require_once("scripts/verificar_sesion.php");
+session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
 ?>
 
 <!DOCTYPE html>
@@ -11,25 +11,33 @@ require_once("scripts/verificar_sesion.php");
     <link rel="stylesheet" href="estilos/principal.css">
     <link rel="stylesheet" href="reuso/footer.css">
     <link rel="stylesheet" href="reuso/header.css">
-
-
 </head>
-<header class="barra-superior">
-    <div class="contenedor-header">
-        <div class="logo-area">
-            <span class="gg">GG</span>
-            <span class="records">RECORDS</span>
-        </div>
-        <nav class="nav-header">
-            <a href="login/login.php">Iniciar sesión</a>
-            <a href="login/register.php">Registro</a>
-            <a href="usuario/vacantes.php">Vacantes</a>
-        </nav>
-    </div>
-</header>
-
 
 <body class="index-body">
+    <header class="barra-superior">
+        <div class="contenedor-header">
+            <div class="logo-area">
+                <span class="gg">GG</span>
+                <span class="records">RECORDS</span>
+            </div>
+            <nav class="nav-header">
+  <?php if (isset($_SESSION['usuario'])): ?>
+    <span class="bienvenida">
+      Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+      (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
+    </span>
+    <a href="usuario/vacantes.php">Vacantes</a>
+    <a href="scripts/logout.php">Cerrar sesión</a>
+  <?php else: ?>
+    <a href="login/login.php">Iniciar sesión</a>
+    <a href="login/register.php">Registro</a>
+    <a href="usuario/vacantes.php">Vacantes</a>
+  <?php endif; ?>
+</nav>
+
+        </div>
+    </header>
+
     <div class="contenedor-index grande efecto">
         <img src="imagenes/logo.png" alt="GG Records" class="logo">
         <h1 class="titulo-principal">Únete a GG Records</h1>
@@ -42,10 +50,15 @@ require_once("scripts/verificar_sesion.php");
             dar seguimiento a tu solicitud y formar parte de un equipo apasionado por el ritmo y la innovación.
         </p>
         <div class="botones">
-            <a href="login/login.php" class="boton grande">Iniciar Sesión</a>
-            <a href="login/register.php" class="boton boton-secundario grande">Registrarse</a>
+            <?php if (!isset($_SESSION['usuario'])): ?>
+                <a href="login/login.php" class="boton grande">Iniciar Sesión</a>
+                <a href="login/register.php" class="boton boton-secundario grande">Registrarse</a>
+            <?php else: ?>
+                <a href="usuario/vacantes.php" class="boton grande">Ir a Vacantes</a>
+            <?php endif; ?>
         </div>
     </div>
+
     <footer class="pie-pagina">
         <div class="footer-contenido">
             <div class="footer-col">
@@ -64,9 +77,11 @@ require_once("scripts/verificar_sesion.php");
             <div class="footer-col">
                 <h4>Enlaces útiles</h4>
                 <ul>
-                    <li><a href="../login/login.php">Iniciar Sesión</a></li>
-                    <li><a href="../login/register.php">Registrarse</a></li>
-                    <li><a href="../usuario/vacantes.php">Ver Vacantes</a></li>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <li><a href="login/login.php">Iniciar Sesión</a></li>
+                        <li><a href="login/register.php">Registrarse</a></li>
+                    <?php endif; ?>
+                    <li><a href="usuario/vacantes.php">Ver Vacantes</a></li>
                 </ul>
             </div>
 
@@ -84,7 +99,6 @@ require_once("scripts/verificar_sesion.php");
             <p>© 2025 GG Records – Todos los derechos reservados.</p>
         </div>
     </footer>
-
 </body>
 
 </html>

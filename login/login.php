@@ -1,10 +1,15 @@
 <?php
 session_start();
 if (isset($_SESSION['rol'])) {
-    header("Location: ../index.php");
+    if ($_SESSION['rol'] === 'admin') {
+        header("Location: ../admin/panel.php");
+    } else {
+        header("Location: ../usuario/vacantes.php");
+    }
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
