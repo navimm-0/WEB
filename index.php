@@ -60,7 +60,7 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
                 <?php if ($_SESSION['rol'] === 'admin'): ?>
                     <a href="admin/panel.php" class="boton grande">Ir al Panel</a>
                 <?php else: ?>
-                    <a href="usuario/vacantes.php" class="boton grande">Ir a Vacantes</a>
+                    <a href="usuario/menu_usuario.php" class="boton grande">Ir al Panel</a>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
