@@ -5,10 +5,10 @@ USE ggrecords;
 -- Crear tabla de usuarios
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    usuario VARCHAR(50) NOT NULL UNIQUE,
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    contrasena_hash VARCHAR(255) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    usuario VARCHAR(20) NOT NULL UNIQUE,
+    correo VARCHAR(30) NOT NULL UNIQUE,
+    contrasena_hash VARCHAR(20) NOT NULL,
     rol ENUM('usuario', 'admin') DEFAULT 'usuario',
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -36,5 +36,17 @@ CREATE TABLE Vacante (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS postulaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_vacante INT NOT NULL,
+    fecha_postulacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'aceptada', 'rechazada') DEFAULT 'pendiente',
+    cv_pdf VARCHAR(255), -- ← aquí se guarda la ruta al archivo PDF
+    observaciones TEXT,
+
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_vacante) REFERENCES Vacante(id) ON DELETE CASCADE
+);
 
 
