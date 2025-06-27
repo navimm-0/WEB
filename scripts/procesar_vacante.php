@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         empty($titulo) || empty($descripcion) || empty($departamento) || empty($conocimientos) ||
         empty($sueldo) || empty($horario) || empty($fecha_publicacion) || empty($fecha_cierre)
     ) {
-        header("Location: ../admin/crear_vacante.php?error=Faltan campos obligatorios");
+        header("Location: ../admin/crear_vacante.php?error=Faltan+campos+obligatorios");
         exit();
     }
 
@@ -31,7 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
-        die("Error al preparar consulta: " . $conn->error);
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Error al preparar la consulta: " . $conn->error));
+        exit();
     }
 
     $stmt->bind_param(
@@ -49,14 +50,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     );
 
     if ($stmt->execute()) {
-        header("Location: ../admin/crear_vacante.php?exito=Vacante guardada correctamente");
+        // Redirige al panel con mensaje de éxito
+        header("Location: ../admin/panel.php?exito=Vacante+creada+correctamente");
     } else {
-        header("Location: ../admin/crear_vacante.php?error=Error al guardar la vacante: " . urlencode($stmt->error));
+        // Redirige a crear con mensaje de error
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Error al guardar la vacante: " . $stmt->error));
     }
 
     $stmt->close();
     $conn->close();
 } else {
-    header("Location: ../admin/crear_vacante.php");
+    // Acceso no permitido vía GET
+    header("Location: ../admin/gestionar_vacantes.php");
     exit();
 }

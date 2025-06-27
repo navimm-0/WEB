@@ -57,17 +57,22 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
             <div class="tarjeta">
                 <h3>Crear vacantes</h3>
                 <p>Crear o modificar vacantes internas.</p>
-                <a href="crear_vacante.php" class="boton">Gestionar</a>
+                <a href="crear_vacante.php" class="boton">Crear</a>
             </div>
             <div class="tarjeta">
                 <h3>Postulaciones</h3>
                 <p>Revisa quién ha aplicado a las vacantes.</p>
-                <a href="gestionar_vacantes.php" class="boton">Ver Postulaciones</a>
+                <a href="postulados.php" class="boton">Ver Postulaciones</a>
             </div>
             <div class="tarjeta">
                 <h3>Usuarios aceptados</h3>
                 <p>Administra el listado los aplicantes aceptados.</p>
-                <a href="empleados.php" class="boton">Ver Empleados</a>
+                <a href="empleados.php" class="boton">Ver</a>
+            </div>
+             <div class="tarjeta">
+                <h3>Gestionar vacantes</h3>
+                <p>Administra las vacantes publicadas.</p>
+                <a href="gestionar_vacantes.php" class="boton">Gestionar</a>
             </div>
         </section>
     </main>

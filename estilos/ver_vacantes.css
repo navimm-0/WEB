@@ -1,0 +1,115 @@
+body {
+    background: linear-gradient(to right, #1a1a1a, #262626);
+    color: #f5f5f5;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+main.contenido-admin {
+    background-color: #1e1e1e;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 2.3rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+}
+
+.boton {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    padding: 0.8rem 1.6rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.boton:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+.boton-secundario {
+    background-color: #2a2a2a;
+}
+
+.boton-volver {
+    background-color: #004080;
+    margin-bottom: 1rem;
+}
+
+.boton-volver:hover {
+    background-color: #0055aa;
+}
+
+.tabla-vacantes {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
+}
+
+.tabla-vacantes thead {
+    background-color: #333;
+}
+
+.tabla-vacantes th,
+.tabla-vacantes td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #444;
+    color: #f0f0f0;
+}
+
+.tabla-vacantes tr:hover {
+    background-color: #383838;
+}
+
+@media (max-width: 768px) {
+    .tabla-vacantes thead {
+        display: none;
+    }
+
+    .tabla-vacantes tr {
+        display: block;
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        background-color: #2a2a2a;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.02);
+    }
+
+    .tabla-vacantes td {
+        display: block;
+        padding: 1rem;
+        border: none;
+        position: relative;
+    }
+
+    .tabla-vacantes td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #aaa;
+    }
+}

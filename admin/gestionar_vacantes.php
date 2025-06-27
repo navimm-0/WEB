@@ -1,16 +1,13 @@
 <?php
-require_once("../scripts/verificar_sesion.php");
-
-// Validar rol admin
-if ($_SESSION['rol'] !== 'admin') {
+session_start();
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
-
-require_once("../scripts/conexion.php");
+require_once '../scripts/conexion.php';
 
 // Obtener vacantes
-$sql = "SELECT * FROM vacantes ORDER BY fecha_publicacion DESC";
+$sql = "SELECT * FROM Vacante ORDER BY fecha_publicacion DESC";
 $resultado = $conn->query($sql);
 ?>
 
@@ -19,67 +16,135 @@ $resultado = $conn->query($sql);
 
 <head>
     <meta charset="UTF-8">
-    <title>Gestionar Vacantes – GG Records</title>
-    <link rel="stylesheet" href="../estilos/admin.css">
-    <link rel="stylesheet" href="reuso/header.css">
+    <title>Gestionar Vacantes - GG Records</title>
+    <link rel="stylesheet" href="../reuso/header.css">
+    <link rel="stylesheet" href="../reuso/footer.css">
+    <link rel="stylesheet" href="../estilos/ver_vacantes.css">
 </head>
 
 <body>
-    <?php
-    session_start();
-    ?>
-
     <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
-    <div class="contenedor-header">
-        <!-- Logotipo textual al estilo del index -->
-        <div class="logo-area">
-            <span class="gg">GG</span>
-            <span class="records">RECORDS</span>
-        </div>
+        <div class="contenedor-header">
+            <div class="logo-area">
+                <span class="gg">GG</span>
+                <span class="records">RECORDS</span>
+            </div>
+            <nav class="nav-header">
+                <?php if (isset($_SESSION['usuario'])): ?>
 
-        <nav class="nav-header">
-            <?php if (isset($_SESSION['usuario'])): ?>
-                <span class="bienvenida">
-                    Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
-                    (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
-                </span>
-                <a href="../index.php">Inicio</a>
-                <a href="vacantes.php">Vacantes</a>
-                <a href="postulaciones.php">Postulaciones</a>
-                <a href="dada.php">Aceptados</a>
-                <a href="perfil.php">Perfil</a>
-                <a href="../scripts/logout.php">Cerrar Sesión</a>
-            <?php else: ?>
-                <a href="../login/login.php">Iniciar sesión</a>
-                <a href="../login/register.php">Registro</a>
-            <?php endif; ?>
-        </nav>
-    </div>
-</header>
+                    </span>
+                    <a href="../index.php">Inicio</a>
+                    <a href="panel.php">Panel Administrador</a>
+                    <a href="vacantes.php">Vacantes</a>
+                    <a href="postulaciones.php">Postulaciones</a>
+                    <a href="dada.php">Aceptados</a>
+                    <a href="perfil.php">Perfil</a>
+                    <a href="../scripts/logout.php">Cerrar Sesión</a>
+                <?php else: ?>
+                    <a href="../login/login.php">Iniciar sesión</a>
+                    <a href="../login/register.php">Registro</a>
+                <?php endif; ?>
+            </nav>
+        </div>
+    </header>
 
     <main class="contenido-admin">
-        <h1>Gestionar Vacantes</h1>
-        <a href="crear_vacante.php" class="boton">Nueva Vacante</a>
+        <h1>Vacantes Publicadas</h1>
 
-        <div class="tarjetas-panel">
-            <?php if ($resultado->num_rows > 0): ?>
-                <?php while ($vacante = $resultado->fetch_assoc()): ?>
-                    <div class="tarjeta">
-                        <h3><?php echo htmlspecialchars($vacante['titulo']); ?></h3>
-                        <p><strong>Departamento:</strong> <?php echo htmlspecialchars($vacante['departamento']); ?></p>
-                        <p><strong>Publicada:</strong> <?php echo $vacante['fecha_publicacion']; ?></p>
-                        <p><strong>Cierre:</strong> <?php echo $vacante['fecha_cierre']; ?></p>
-                        <p><strong>Estado:</strong> <?php echo ucfirst($vacante['estado']); ?></p>
-                        <a href="editar_vacante.php?id=<?php echo $vacante['id']; ?>" class="boton">Editar</a>
-                        <a href="eliminar_vacante.php?id=<?php echo $vacante['id']; ?>" class="boton"
-                            onclick="return confirm('¿Eliminar esta vacante?');">Eliminar</a>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No hay vacantes registradas.</p>
-            <?php endif; ?>
+        <div class="acciones">
+            <a href="panel.php" class="boton boton-volver"> Volver al Panel</a>
         </div>
+
+        <table class="tabla-vacantes">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Departamento</th>
+                    <th>Estado</th>
+                    <th>Publicado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($resultado->num_rows > 0): ?>
+                    <table class="tabla-vacantes">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Departamento</th>
+                                <th>Estado</th>
+                                <th>Publicado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($fila = $resultado->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($fila['titulo']); ?></td>
+                                    <td><?php echo htmlspecialchars($fila['departamento']); ?></td>
+                                    <td><?php echo ucfirst($fila['estado']); ?></td>
+                                    <td><?php echo htmlspecialchars($fila['fecha_publicacion']); ?></td>
+                                    <td>
+                                        <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
+                                        <form method="POST" action="../scripts/eliminar_vacante.php" style="display:inline;"
+                                            onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
+                                            <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
+                                            <button type="submit" class="boton boton-secundario">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <div class="mensaje-info">
+                        Actualmente no hay vacantes registradas.
+                    </div>
+                <?php endif; ?>
+
+            </tbody>
+        </table>
     </main>
+    <footer class="pie-pagina">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <h4>GG Records</h4>
+                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>Email: contacto@ggrecords.com</p>
+                <p>Tel: +52 55 1234 5678</p>
+                <p>Ubicación: Ciudad de México</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Enlaces útiles</h4>
+                <ul>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <li><a href="login/login.php">Iniciar Sesión</a></li>
+                        <li><a href="login/register.php">Registrarse</a></li>
+                    <?php endif; ?>
+                    <li><a href="usuario/vacantes.php">Ver Vacantes</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="redes-sociales">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© 2025 GG Records – Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

@@ -1,12 +1,11 @@
 <?php
-require_once("../scripts/verificar_sesion.php");
-
-if ($_SESSION['rol'] !== 'admin') {
+session_start();
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-require_once("../scripts/conexion.php");
+require_once '../scripts/conexion.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: gestionar_vacantes.php");
@@ -14,45 +13,18 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
-$error = "";
-
-$sql = "SELECT * FROM vacantes WHERE id = ?";
+$sql = "SELECT * FROM Vacante WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$result = $stmt->get_result();
+$resultado = $stmt->get_result();
 
-if ($result->num_rows === 0) {
-    header("Location: gestionar_vacantes.php");
+if ($resultado->num_rows === 0) {
+    header("Location: gestionar_vacantes.php?error=Vacante no encontrada");
     exit();
 }
 
-$vacante = $result->fetch_assoc();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titulo = trim($_POST['titulo']);
-    $descripcion = trim($_POST['descripcion']);
-    $departamento = trim($_POST['departamento']);
-    $fecha_publicacion = $_POST['fecha_publicacion'];
-    $fecha_cierre = $_POST['fecha_cierre'];
-    $estado = $_POST['estado'];
-
-    // Validación básica
-    if (!$titulo || !$descripcion || !$departamento || !$fecha_publicacion || !$fecha_cierre || !$estado) {
-        $error = "Por favor completa todos los campos.";
-    } else {
-        $sql_update = "UPDATE vacantes SET titulo = ?, descripcion = ?, departamento = ?, fecha_publicacion = ?, fecha_cierre = ?, estado = ? WHERE id = ?";
-        $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("ssssssi", $titulo, $descripcion, $departamento, $fecha_publicacion, $fecha_cierre, $estado, $id);
-
-        if ($stmt_update->execute()) {
-            header("Location: gestionar_vacantes.php");
-            exit();
-        } else {
-            $error = "Error al actualizar la vacante.";
-        }
-    }
-}
+$vacante = $resultado->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -60,39 +32,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Editar Vacante – GG Records</title>
-    <link rel="stylesheet" href="../estilos/admin.css">
+    <link rel="stylesheet" href="../reuso/header.css">
+    <link rel="stylesheet" href="../reuso/footer.css">
+    <link rel="stylesheet" href="../estilos/gestionar_vacantes.css">
 </head>
 <body>
-    <main class="contenido-admin">
-        <h1>Editar Vacante</h1>
-        <?php if (!empty($error)): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <form method="POST" action="editar_vacante.php?id=<?php echo $id; ?>">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($vacante['titulo']); ?>" required>
 
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="5" required><?php echo htmlspecialchars($vacante['descripcion']); ?></textarea>
+<header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
+    <div class="contenedor-header">
+        <div class="logo-area">
+            <span class="gg">GG</span>
+            <span class="records">RECORDS</span>
+        </div>
+        <nav class="nav-header">
+            <?php if (isset($_SESSION['usuario'])): ?>
+                    
+                </span>
+                <a href="../index.php">Inicio</a>
+                <a href="panel.php">Panel Administrador</a>
+                <a href="vacantes.php">Vacantes</a>
+                <a href="postulaciones.php">Postulaciones</a>
+                <a href="dada.php">Aceptados</a>
+                <a href="perfil.php">Perfil</a>
+                <a href="../scripts/logout.php">Cerrar Sesión</a>
+            <?php else: ?>
+                <a href="../login/login.php">Iniciar sesión</a>
+                <a href="../login/register.php">Registro</a>
+            <?php endif; ?>
+        </nav>
+    </div>
+</header>
 
-            <label for="departamento">Departamento:</label>
-            <input type="text" id="departamento" name="departamento" value="<?php echo htmlspecialchars($vacante['departamento']); ?>" required>
+<main class="contenido-admin">
+    <h1>Editar Vacante</h1>
 
-            <label for="fecha_publicacion">Fecha de Publicación:</label>
-            <input type="date" id="fecha_publicacion" name="fecha_publicacion" value="<?php echo $vacante['fecha_publicacion']; ?>" required>
+    <?php if (isset($_GET['error'])): ?>
+        <div class="error"><?php echo htmlspecialchars($_GET['error']); ?></div>
+    <?php endif; ?>
 
-            <label for="fecha_cierre">Fecha de Cierre:</label>
-            <input type="date" id="fecha_cierre" name="fecha_cierre" value="<?php echo $vacante['fecha_cierre']; ?>" required>
+    <form method="POST" action="../scripts/actualizar_vacante.php" class="formulario-vacante">
+        <input type="hidden" name="id" value="<?php echo $vacante['id']; ?>">
 
-            <label for="estado">Estado:</label>
-            <select id="estado" name="estado" required>
-                <option value="activa" <?php if ($vacante['estado'] === 'activa') echo "selected"; ?>>Activa</option>
-                <option value="inactiva" <?php if ($vacante['estado'] === 'inactiva') echo "selected"; ?>>Inactiva</option>
-            </select>
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($vacante['titulo']); ?>" required>
 
-            <button type="submit" class="boton">Actualizar</button>
-            <a href="gestionar_vacantes.php" class="boton">Cancelar</a>
-        </form>
-    </main>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required><?php echo htmlspecialchars($vacante['descripcion']); ?></textarea>
+
+        <label for="departamento">Departamento:</label>
+        <input type="text" id="departamento" name="departamento" value="<?php echo htmlspecialchars($vacante['departamento']); ?>" required>
+
+        <label for="palabras_clave">Palabras Clave (solo admin):</label>
+        <textarea id="palabras_clave" name="palabras_clave" rows="2"><?php echo htmlspecialchars($vacante['palabras_clave']); ?></textarea>
+
+        <label for="conocimientos">Conocimientos requeridos:</label>
+        <textarea id="conocimientos" name="conocimientos" rows="3" required><?php echo htmlspecialchars($vacante['conocimientos']); ?></textarea>
+
+        <label for="sueldo">Sueldo:</label>
+        <input type="text" id="sueldo" name="sueldo" value="<?php echo htmlspecialchars($vacante['sueldo']); ?>" required>
+
+        <div class="acciones">
+            <button type="submit" class="boton">Actualizar Vacante</button>
+            <a href="gestionar_vacantes.php" class="boton boton-secundario"> Volver</a>
+        </div>
+    </form>
+</main>
+
+<footer class="pie-pagina">
+    <?php include '../reuso/footer.php'; ?>
+</footer>
+
 </body>
 </html>

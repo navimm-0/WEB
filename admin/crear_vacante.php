@@ -9,15 +9,14 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Crear Vacante – GG Records</title>
-    <link rel="stylesheet" href="../reuso/header.css">
-    <link rel="stylesheet" href="../reuso/footer.css">
-    <link rel="stylesheet" href="../estilos/crear_vacante.css">
+  <meta charset="UTF-8">
+  <title>Crear Vacante - GG Records</title>
+  <link rel="stylesheet" href="../reuso/header.css">
+  <link rel="stylesheet" href="../reuso/footer.css">
+  <link rel="stylesheet" href="../estilos/crear_vacante.css">
 </head>
 <body>
-
-<header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
+ <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
     <div class="contenedor-header">
         <div class="logo-area">
             <span class="gg">GG</span>
@@ -25,9 +24,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
         </div>
         <nav class="nav-header">
             <?php if (isset($_SESSION['usuario'])): ?>
-                <span class="bienvenida">
-                    Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
-                    (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
+                    
                 </span>
                 <a href="../index.php">Inicio</a>
                 <a href="panel.php">Panel Administrador</a>
@@ -92,44 +89,9 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     </form>
 </main>
 
- <footer class="pie-pagina">
-        <div class="footer-contenido">
-            <div class="footer-col">
-                <h4>GG Records</h4>
-                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
-                </p>
-            </div>
 
-            <div class="footer-col">
-                <h4>Contacto</h4>
-                <p>Email: contacto@ggrecords.com</p>
-                <p>Tel: +52 55 1234 5678</p>
-                <p>Ubicación: Ciudad de México</p>
-            </div>
-
-            <div class="footer-col">
-                <h4>Enlaces útiles</h4>
-                <ul>
-                    <li><a href="../login/login.php">Iniciar Sesión</a></li>
-                    <li><a href="../login/register.php">Registrarse</a></li>
-                    <li><a href="../usuario/vacantes.php">Ver Vacantes</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>Síguenos</h4>
-                <div class="redes-sociales">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-copy">
-            <p>© 2025 GG Records – Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
+  <footer class="pie-pagina">
+    <?php include '../reuso/footer.php'; ?>
+  </footer>
 </body>
 </html>
