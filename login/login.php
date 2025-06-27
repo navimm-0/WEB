@@ -19,15 +19,16 @@ if (isset($_SESSION['rol'])) {
   <link rel="stylesheet" href="../estilos/login.css">
 </head>
 <body>
- <header class="barra-superior">
+<header class="barra-superior">
     <div class="contenedor-header">
         <div class="logo-area">
             <span class="gg">GG</span>
             <span class="records">RECORDS</span>
         </div>
         <nav class="nav-header">
-            <a href="register.php">Registro</a>
-            <a href="../usuario/vacantes.php">Vacantes</a>
+            <a href="../index.php">Inicio</a>
+            <a href="menu.php">Menú</a>
+            <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
     </div>
 </header>

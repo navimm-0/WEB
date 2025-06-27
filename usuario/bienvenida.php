@@ -93,9 +93,9 @@ $usuario = $_SESSION['usuario'];
     <main>
         <div class="mensaje-bienvenida">
             <h2>Inicio de sesión exitoso</h2>
-            <p>Bienvenido/a, <strong><?php echo htmlspecialchars($usuario); ?></strong>. Hemos encontrado tu solicitud de vacante.</p>
+            <p>Bienvenido/a, <strong><?php echo htmlspecialchars($usuario); ?></strong>. ¡¡Creemos una vacante!!.</p>
             <form action="menu_usuario.php" method="GET">
-                <button type="submit" class="btn-estado">Ii al menu de usuario</button>
+                <button type="submit" class="btn-estado">Ir al menu de usuario</button>
             </form>
         </div>
     </main>
