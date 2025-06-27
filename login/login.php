@@ -11,47 +11,48 @@ if (isset($_SESSION['rol'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Iniciar Sesión – GG Records</title>
-  <link rel="stylesheet" href="../reuso/header.css">
-  <link rel="stylesheet" href="../reuso/footer.css">
-  <link rel="stylesheet" href="../estilos/login.css">
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión – GG Records</title>
+    <link rel="stylesheet" href="../reuso/header.css">
+    <link rel="stylesheet" href="../reuso/footer.css">
+    <link rel="stylesheet" href="../estilos/login.css">
 </head>
+
 <body>
-<header class="barra-superior">
-    <div class="contenedor-header">
-        <div class="logo-area">
-            <span class="gg">GG</span>
-            <span class="records">RECORDS</span>
+    <header class="barra-superior">
+        <div class="contenedor-header">
+            <div class="logo-area">
+                <span class="gg">GG</span>
+                <span class="records">RECORDS</span>
+            </div>
+            <nav class="nav-header">
+                <a href="../index.php">Inicio</a>
+                <a href="menu.php">Menú</a>
+            </nav>
         </div>
-        <nav class="nav-header">
-            <a href="../index.php">Inicio</a>
-            <a href="menu.php">Menú</a>
-            <a href="../scripts/logout.php">Cerrar Sesión</a>
-        </nav>
-    </div>
-</header>
+    </header>
 
-  <main class="contenedor-login">
-    <form action="../scripts/procesar_login.php" method="POST" class="formulario-login">
-      <h2>Iniciar Sesión</h2>
+    <main class="contenedor-login">
+        <form action="../scripts/procesar_login.php" method="POST" class="formulario-login">
+            <h2>Iniciar Sesión</h2>
 
-      <label for="usuario">Usuario:</label>
-      <input type="text" name="usuario" required>
+            <label for="usuario">Usuario:</label>
+            <input type="text" name="usuario" required>
 
-      <label for="contrasena">Contraseña:</label>
-      <input type="password" name="contrasena" required>
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" name="contrasena" required>
 
-      <button type="submit">Entrar</button>
+            <button type="submit">Entrar</button>
 
-      <?php if (isset($_GET['error'])): ?>
-        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
-      <?php endif; ?>
-    </form>
-  </main>
+            <?php if (isset($_GET['error'])): ?>
+                <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
+            <?php endif; ?>
+        </form>
+    </main>
 
- <footer class="pie-pagina">
+    <footer class="pie-pagina">
         <div class="footer-contenido">
             <div class="footer-col">
                 <h4>GG Records</h4>
@@ -90,4 +91,5 @@ if (isset($_SESSION['rol'])) {
         </div>
     </footer>
 </body>
+
 </html>

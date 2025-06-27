@@ -8,153 +8,155 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Crear Vacante - GG Records</title>
-  <link rel="stylesheet" href="../reuso/header.css">
-  <link rel="stylesheet" href="../reuso/footer.css">
-  <link rel="stylesheet" href="../estilos/crear_vacante.css">
+    <meta charset="UTF-8">
+    <title>Crear Vacante - GG Records</title>
+    <link rel="stylesheet" href="../reuso/header.css">
+    <link rel="stylesheet" href="../reuso/footer.css">
+    <link rel="stylesheet" href="../estilos/crear_vacante.css">
 </head>
+
 <body>
- <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
-    <div class="contenedor-header">
-        <div class="logo-area">
-            <span class="gg">GG</span>
-            <span class="records">RECORDS</span>
+    <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
+        <div class="contenedor-header">
+            <div class="logo-area">
+                <span class="gg">GG</span>
+                <span class="records">RECORDS</span>
+            </div>
+            <nav class="nav-header">
+                <?php if (isset($_SESSION['usuario'])): ?>
+
+                    </span>
+                    <a href="../index.php">Inicio</a>
+                    <a href="panel.php">Panel Administrador</a>
+                    <a href="vacantes.php">Vacantes</a>
+                    <a href="postulaciones.php">Postulaciones</a>
+                    <a href="dada.php">Aceptados</a>
+                    <a href="perfil.php">Perfil</a>
+                    <a href="../scripts/logout.php">Cerrar Sesión</a>
+                <?php else: ?>
+                    <a href="../login/login.php">Iniciar sesión</a>
+                    <a href="../login/register.php">Registro</a>
+                <?php endif; ?>
+            </nav>
         </div>
-        <nav class="nav-header">
-            <?php if (isset($_SESSION['usuario'])): ?>
-                    
-                </span>
-                <a href="../index.php">Inicio</a>
-                <a href="panel.php">Panel Administrador</a>
-                <a href="vacantes.php">Vacantes</a>
-                <a href="postulaciones.php">Postulaciones</a>
-                <a href="dada.php">Aceptados</a>
-                <a href="perfil.php">Perfil</a>
-                <a href="../scripts/logout.php">Cerrar Sesión</a>
-            <?php else: ?>
-                <a href="../login/login.php">Iniciar sesión</a>
-                <a href="../login/register.php">Registro</a>
-            <?php endif; ?>
-        </nav>
-    </div>
-</header>
+    </header>
 
-<main class="contenido-admin">
-    <h1>Crear Nueva Vacante</h1>
+    <main class="contenido-admin">
+        <h1>Crear Nueva Vacante</h1>
 
-    <?php if (isset($_GET['error'])): ?>
-        <div class="error"><?php echo htmlspecialchars($_GET['error']); ?></div>
-    <?php endif; ?>
+        <?php if (isset($_GET['error'])): ?>
+            <div class="error"><?php echo htmlspecialchars($_GET['error']); ?></div>
+        <?php endif; ?>
 
-<main class="contenido-admin">
-  <h1>Crear Nueva Vacante Musical</h1>
+        <main class="contenido-admin">
+            <h1>Crear Nueva Vacante Musical</h1>
 
-  <form method="POST" action="../scripts/procesar_vacante.php" autocomplete="off">
+            <form method="POST" action="../scripts/procesar_vacante.php" autocomplete="off">
 
-    <label for="titulo">Título de la vacante:</label>
-    <input type="text" id="titulo" name="titulo" required>
+                <label for="titulo">Título de la vacante:</label>
+                <input type="text" id="titulo" name="titulo" required>
 
-    <label for="descripcion">Descripción:</label>
-    <input type="text" id="descripcion" name="descripcion" required>
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion" required>
 
-    <label for="criterio_1">Nivel académico solicitado:</label>
-    <select id="criterio_1" name="criterio_1" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Técnico">Técnico</option>
-      <option value="Licenciatura">Licenciatura</option>
-      <option value="Maestría">Maestría</option>
-      <option value="Sin requisito">Sin requisito</option>
-    </select>
+                <label for="criterio_1">Nivel académico solicitado:</label>
+                <select id="criterio_1" name="criterio_1" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Licenciatura">Licenciatura</option>
+                    <option value="Maestría">Maestría</option>
+                    <option value="Sin requisito">Sin requisito</option>
+                </select>
 
-    <label for="criterio_2">Software de producción requerido:</label>
-    <select id="criterio_2" name="criterio_2" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Ableton Live">Ableton Live</option>
-      <option value="FL Studio">FL Studio</option>
-      <option value="Logic Pro">Logic Pro</option>
-      <option value="Pro Tools">Pro Tools</option>
-      <option value="Otro">Otro</option>
-    </select>
+                <label for="criterio_2">Software de producción requerido:</label>
+                <select id="criterio_2" name="criterio_2" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Ableton Live">Ableton Live</option>
+                    <option value="FL Studio">FL Studio</option>
+                    <option value="Logic Pro">Logic Pro</option>
+                    <option value="Pro Tools">Pro Tools</option>
+                    <option value="Otro">Otro</option>
+                </select>
 
-    <label for="criterio_3">Años de experiencia en producción musical:</label>
-    <input type="number" id="criterio_3" name="criterio_3" min="0" required>
+                <label for="criterio_3">Años de experiencia en producción musical:</label>
+                <input type="number" id="criterio_3" name="criterio_3" min="0" required>
 
-    <label for="criterio_4">Experiencia en mezcla y masterización:</label>
-    <select id="criterio_4" name="criterio_4" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Sí">Sí</option>
-      <option value="No">No</option>
-    </select>
+                <label for="criterio_4">Experiencia en mezcla y masterización:</label>
+                <select id="criterio_4" name="criterio_4" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
 
-    <label for="criterio_5">Conocimiento en teoría musical:</label>
-    <select id="criterio_5" name="criterio_5" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Básico">Básico</option>
-      <option value="Intermedio">Intermedio</option>
-      <option value="Avanzado">Avanzado</option>
-    </select>
+                <label for="criterio_5">Conocimiento en teoría musical:</label>
+                <select id="criterio_5" name="criterio_5" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Básico">Básico</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzado">Avanzado</option>
+                </select>
 
-    <label for="criterio_6">Inglés técnico (musical) necesario:</label>
-    <select id="criterio_6" name="criterio_6" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Básico">Básico</option>
-      <option value="Intermedio">Intermedio</option>
-      <option value="Avanzado">Avanzado</option>
-    </select>
+                <label for="criterio_6">Inglés técnico (musical) necesario:</label>
+                <select id="criterio_6" name="criterio_6" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Básico">Básico</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzado">Avanzado</option>
+                </select>
 
-    <label for="criterio_7">Instrumento que domina:</label>
-    <select id="criterio_7" name="criterio_7" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Ninguno">Ninguno</option>
-      <option value="Guitarra">Guitarra</option>
-      <option value="Piano/Teclado">Piano/Teclado</option>
-      <option value="Batería">Batería</option>
-      <option value="Voz">Voz</option>
-      <option value="Otro">Otro</option>
-    </select>
+                <label for="criterio_7">Instrumento que domina:</label>
+                <select id="criterio_7" name="criterio_7" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="Guitarra">Guitarra</option>
+                    <option value="Piano/Teclado">Piano/Teclado</option>
+                    <option value="Batería">Batería</option>
+                    <option value="Voz">Voz</option>
+                    <option value="Otro">Otro</option>
+                </select>
 
-    <label for="criterio_8">Disponibilidad para presentaciones nocturnas:</label>
-    <select id="criterio_8" name="criterio_8" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Sí">Sí</option>
-      <option value="No">No</option>
-    </select>
+                <label for="criterio_8">Disponibilidad para presentaciones nocturnas:</label>
+                <select id="criterio_8" name="criterio_8" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
 
-    <label for="criterio_9">Edad mínima requerida:</label>
-    <input type="number" id="criterio_9" name="criterio_9" min="16" required>
+                <label for="criterio_9">Edad mínima requerida:</label>
+                <input type="number" id="criterio_9" name="criterio_9" min="16" required>
 
-    <label for="criterio_10">Sueldo ofertado mensual (MXN):</label>
-    <input type="number" id="criterio_10" name="criterio_10" min="0" required>
+                <label for="criterio_10">Sueldo ofertado mensual (MXN):</label>
+                <input type="number" id="criterio_10" name="criterio_10" min="0" required>
 
-    <label for="criterio_11">Disponibilidad para giras:</label>
-    <select id="criterio_11" name="criterio_11" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Sí">Sí</option>
-      <option value="No">No</option>
-    </select>
+                <label for="criterio_11">Disponibilidad para giras:</label>
+                <select id="criterio_11" name="criterio_11" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
 
-    <label for="criterio_12">Conocimiento en edición de audio/video:</label>
-    <select id="criterio_12" name="criterio_12" required>
-      <option value="">-- Selecciona --</option>
-      <option value="Sí">Sí</option>
-      <option value="No">No</option>
-    </select>
+                <label for="criterio_12">Conocimiento en edición de audio/video:</label>
+                <select id="criterio_12" name="criterio_12" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
 
-    <div class="acciones">
-      <button type="submit" class="boton">Guardar Vacante</button>
-      <a href="panel.php" class="boton boton-secundario">Cancelar</a>
-    </div>
-  </form>
-</main>
+                <div class="acciones">
+                    <button type="submit" class="boton">Guardar Vacante</button>
+                    <a href="panel.php" class="boton boton-secundario">Cancelar</a>
+                </div>
+            </form>
+        </main>
 
 
 
-</main>
+    </main>
 
 
-     <footer class="pie-pagina">
+    <footer class="pie-pagina">
         <div class="footer-contenido">
             <div class="footer-col">
                 <h4>GG Records</h4>
@@ -195,4 +197,5 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
         </div>
     </footer>
 </body>
+
 </html>

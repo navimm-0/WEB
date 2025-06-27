@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: ../index.php");
@@ -7,7 +11,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 require_once '../scripts/conexion.php';
 
 // Obtener vacantes
-$sql = "SELECT * FROM Vacante ORDER BY fecha_publicacion DESC";
+$sql = "SELECT * FROM Vacante ORDER BY fecha_creacion DESC";
 $resultado = $conn->query($sql);
 ?>
 
@@ -31,8 +35,6 @@ $resultado = $conn->query($sql);
             </div>
             <nav class="nav-header">
                 <?php if (isset($_SESSION['usuario'])): ?>
-
-                    </span>
                     <a href="../index.php">Inicio</a>
                     <a href="panel.php">Panel Administrador</a>
                     <a href="vacantes.php">Vacantes</a>
@@ -47,64 +49,50 @@ $resultado = $conn->query($sql);
             </nav>
         </div>
     </header>
+<main class="contenido-admin">
+    <h1>Vacantes Publicadas</h1>
 
-    <main class="contenido-admin">
-        <h1>Vacantes Publicadas</h1>
+    <div class="acciones">
+        <a href="panel.php" class="boton boton-volver">Volver al Panel</a>
+    </div>
 
-        <div class="acciones">
-            <a href="panel.php" class="boton boton-volver"> Volver al Panel</a>
-        </div>
-
-        <table class="tabla-vacantes">
-            <thead>
+    <table class="tabla-vacantes">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Criterio Principal</th>
+                <th>Estado</th>
+                <th>Creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($resultado->num_rows > 0): ?>
+                <?php while ($fila = $resultado->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($fila['titulo']); ?></td>
+                        <td><?php echo htmlspecialchars($fila['criterio_1']); ?></td>
+                        <td><?php echo ucfirst($fila['estado'] ?? 'desconocido'); ?></td>
+                        <td><?php echo htmlspecialchars($fila['fecha_creacion']); ?></td>
+                        <td class="acciones">
+                            <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
+                            <form method="POST" action="../scripts/eliminar_vacante.php" onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
+                                <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
+                                <button type="submit" class="boton boton-secundario">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
                 <tr>
-                    <th>Título</th>
-                    <th>Departamento</th>
-                    <th>Estado</th>
-                    <th>Publicado</th>
-                    <th>Acciones</th>
+                    <td colspan="5" class="mensaje-info">Actualmente no hay vacantes registradas.</td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php if ($resultado->num_rows > 0): ?>
-                    <table class="tabla-vacantes">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Departamento</th>
-                                <th>Estado</th>
-                                <th>Publicado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($fila = $resultado->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($fila['titulo']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['departamento']); ?></td>
-                                    <td><?php echo ucfirst($fila['estado']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['fecha_publicacion']); ?></td>
-                                    <td>
-                                        <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
-                                        <form method="POST" action="../scripts/eliminar_vacante.php" style="display:inline;"
-                                            onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
-                                            <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
-                                            <button type="submit" class="boton boton-secundario">Eliminar</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <div class="mensaje-info">
-                        Actualmente no hay vacantes registradas.
-                    </div>
-                <?php endif; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</main>
 
-            </tbody>
-        </table>
-    </main>
+
     <footer class="pie-pagina">
         <div class="footer-contenido">
             <div class="footer-col">

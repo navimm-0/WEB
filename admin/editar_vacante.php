@@ -46,8 +46,6 @@ $vacante = $resultado->fetch_assoc();
         </div>
         <nav class="nav-header">
             <?php if (isset($_SESSION['usuario'])): ?>
-                    
-                </span>
                 <a href="../index.php">Inicio</a>
                 <a href="panel.php">Panel Administrador</a>
                 <a href="vacantes.php">Vacantes</a>
@@ -79,22 +77,26 @@ $vacante = $resultado->fetch_assoc();
         <label for="descripcion">Descripción:</label>
         <textarea id="descripcion" name="descripcion" rows="4" required><?php echo htmlspecialchars($vacante['descripcion']); ?></textarea>
 
-        <label for="departamento">Departamento:</label>
-        <input type="text" id="departamento" name="departamento" value="<?php echo htmlspecialchars($vacante['departamento']); ?>" required>
+        <?php for ($i = 1; $i <= 12; $i++): ?>
+            <label for="criterio_<?php echo $i; ?>">Criterio <?php echo $i; ?>:</label>
+            <input type="text" id="criterio_<?php echo $i; ?>" name="criterio_<?php echo $i; ?>" 
+                   value="<?php echo htmlspecialchars($vacante["criterio_$i"]); ?>">
+        <?php endfor; ?>
 
-        <label for="palabras_clave">Palabras Clave (solo admin):</label>
-        <textarea id="palabras_clave" name="palabras_clave" rows="2"><?php echo htmlspecialchars($vacante['palabras_clave']); ?></textarea>
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+            <option value="activa" <?php if ($vacante['estado'] === 'activa') echo 'selected'; ?>>Activa</option>
+            <option value="inactiva" <?php if ($vacante['estado'] === 'inactiva') echo 'selected'; ?>>Inactiva</option>
+        </select>
 
-        <label for="conocimientos">Conocimientos requeridos:</label>
-        <textarea id="conocimientos" name="conocimientos" rows="3" required><?php echo htmlspecialchars($vacante['conocimientos']); ?></textarea>
+        <td class="acciones">
+    <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
+    <form method="POST" action="../scripts/eliminar_vacante.php" onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
+        <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
+        <button type="submit" class="boton boton-secundario">Eliminar</button>
+    </form>
+</td>
 
-        <label for="sueldo">Sueldo:</label>
-        <input type="text" id="sueldo" name="sueldo" value="<?php echo htmlspecialchars($vacante['sueldo']); ?>" required>
-
-        <div class="acciones">
-            <button type="submit" class="boton">Actualizar Vacante</button>
-            <a href="gestionar_vacantes.php" class="boton boton-secundario"> Volver</a>
-        </div>
     </form>
 </main>
 
