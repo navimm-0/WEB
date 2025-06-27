@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Panel Administrador – GG Records</title>
@@ -17,20 +18,36 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     <link rel="stylesheet" href="../reuso/footer.css">
     <link rel="stylesheet" href="../estilos/admin.css">
 </head>
+
 <body>
-    <header class="barra-superior">
-        <div class="contenedor-header">
-            <img src="../imagenes/logo.png" alt="GG Records" class="logo-header">
-            <nav class="nav-header">
+   <?php session_start(); ?>
+<header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
+    <div class="contenedor-header">
+        <!-- Logotipo textual al estilo del index -->
+        <div class="logo-area">
+            <span class="gg">GG</span>
+            <span class="records">RECORDS</span>
+        </div>
+
+        <nav class="nav-header">
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <span class="bienvenida">
+                    Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+                    (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
+                </span>
                 <a href="../index.php">Inicio</a>
                 <a href="vacantes.php">Vacantes</a>
                 <a href="postulaciones.php">Postulaciones</a>
-                <a href="empleados.php">Empleados</a>
+                <a href="dada.php">Aceptados</a>
                 <a href="perfil.php">Perfil</a>
                 <a href="../scripts/logout.php">Cerrar Sesión</a>
-            </nav>
-        </div>
-    </header>
+            <?php else: ?>
+                <a href="../login/login.php">Iniciar sesión</a>
+                <a href="../login/register.php">Registro</a>
+            <?php endif; ?>
+        </nav>
+    </div>
+</header>
 
     <main class="contenido-admin">
         <h1>Bienvenido al Panel de Administración</h1>
@@ -38,7 +55,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
         <section class="tarjetas-panel">
             <div class="tarjeta">
-                <h3>Vacantes</h3>
+                <h3>Crear vacantes</h3>
                 <p>Crear o modificar vacantes internas.</p>
                 <a href="crear_vacante.php" class="boton">Gestionar</a>
             </div>
@@ -48,8 +65,8 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
                 <a href="gestionar_vacantes.php" class="boton">Ver Postulaciones</a>
             </div>
             <div class="tarjeta">
-                <h3>Empleados</h3>
-                <p>Administra el listado de empleados contratados.</p>
+                <h3>Usuarios aceptados</h3>
+                <p>Administra el listado los aplicantes aceptados.</p>
                 <a href="empleados.php" class="boton">Ver Empleados</a>
             </div>
         </section>
@@ -59,7 +76,8 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
         <div class="footer-contenido">
             <div class="footer-col">
                 <h4>GG Records</h4>
-                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.</p>
+                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
+                </p>
             </div>
 
             <div class="footer-col">
@@ -95,4 +113,5 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
         </div>
     </footer>
 </body>
+
 </html>
