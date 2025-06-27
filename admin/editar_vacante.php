@@ -72,31 +72,54 @@ $vacante = $resultado->fetch_assoc();
         <input type="hidden" name="id" value="<?php echo $vacante['id']; ?>">
 
         <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($vacante['titulo']); ?>" required>
+        <input type="text" id="titulo" name="titulo" maxlength="25"
+               value="<?php echo htmlspecialchars($vacante['titulo']); ?>" required>
 
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" rows="4" required><?php echo htmlspecialchars($vacante['descripcion']); ?></textarea>
+        <textarea id="descripcion" name="descripcion" rows="4" maxlength="500" required><?php echo htmlspecialchars($vacante['descripcion']); ?></textarea>
 
-        <?php for ($i = 1; $i <= 12; $i++): ?>
-            <label for="criterio_<?php echo $i; ?>">Criterio <?php echo $i; ?>:</label>
-            <input type="text" id="criterio_<?php echo $i; ?>" name="criterio_<?php echo $i; ?>" 
-                   value="<?php echo htmlspecialchars($vacante["criterio_$i"]); ?>">
+        <?php
+        $criterios_nombres = [
+            1 => "Composición musical",
+            2 => "Arreglos y estructura de canciones",
+            3 => "Conocimiento de teoría musical",
+            4 => "Manejo de DAW",
+            5 => "Grabación de audio",
+            6 => "Edición y mezcla",
+            7 => "Masterización",
+            8 => "Uso de instrumentos virtuales y plugins",
+            9 => "Trabajo colaborativo en sesiones",
+            10 => "Creatividad en producción",
+            11 => "Gestión del tiempo en entregas",
+            12 => "Adaptabilidad a estilos musicales"
+        ];
+
+        $opciones = ['-- Seleccionar --', 'Alto', 'Medio', 'Bajo'];
+
+        for ($i = 1; $i <= 12; $i++):
+            $nombre = "criterio_$i";
+            $valor_actual = htmlspecialchars($vacante[$nombre]);
+        ?>
+            <label for="<?php echo $nombre; ?>"><?php echo $criterios_nombres[$i]; ?>:</label>
+            <select id="<?php echo $nombre; ?>" name="<?php echo $nombre; ?>">
+                <?php foreach ($opciones as $op): ?>
+                    <option value="<?php echo $op === '-- Seleccionar --' ? '' : $op; ?>" <?php if ($valor_actual === $op) echo 'selected'; ?>>
+                        <?php echo $op; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         <?php endfor; ?>
 
         <label for="estado">Estado:</label>
-        <select id="estado" name="estado">
+        <select id="estado" name="estado" required>
             <option value="activa" <?php if ($vacante['estado'] === 'activa') echo 'selected'; ?>>Activa</option>
             <option value="inactiva" <?php if ($vacante['estado'] === 'inactiva') echo 'selected'; ?>>Inactiva</option>
         </select>
 
-        <td class="acciones">
-    <a href="editar_vacante.php?id=<?php echo $fila['id']; ?>" class="boton">Editar</a>
-    <form method="POST" action="../scripts/eliminar_vacante.php" onsubmit="return confirm('¿Estás seguro de eliminar esta vacante?')">
-        <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
-        <button type="submit" class="boton boton-secundario">Eliminar</button>
-    </form>
-</td>
-
+        <div class="acciones">
+            <button type="submit" class="boton">Actualizar Vacante</button>
+            <a href="gestionar_vacantes.php" class="boton boton-secundario">Volver</a>
+        </div>
     </form>
 </main>
 

@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
+
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: ../index.php");
     exit();
@@ -14,31 +15,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = intval($_POST['id']);
     $titulo = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
-    $criterio_1 = $_POST['criterio_1'] ?? '';
-    $criterio_2 = $_POST['criterio_2'] ?? '';
-    $criterio_3 = $_POST['criterio_3'] ?? '';
-    $criterio_4 = $_POST['criterio_4'] ?? '';
-    $criterio_5 = $_POST['criterio_5'] ?? '';
-    $criterio_6 = $_POST['criterio_6'] ?? '';
-    $criterio_7 = $_POST['criterio_7'] ?? '';
-    $criterio_8 = $_POST['criterio_8'] ?? '';
-    $criterio_9 = $_POST['criterio_9'] ?? '';
-    $criterio_10 = $_POST['criterio_10'] ?? '';
-    $criterio_11 = $_POST['criterio_11'] ?? '';
-    $criterio_12 = $_POST['criterio_12'] ?? '';
 
-    // Validación básica
-    if (
-        empty($titulo) || empty($descripcion) || empty($criterio_1) || empty($criterio_2) ||
-        $criterio_3 === '' || empty($criterio_4) || empty($criterio_5) || empty($criterio_6) ||
-        empty($criterio_7) || empty($criterio_8) || $criterio_9 === '' || $criterio_10 === '' ||
-        empty($criterio_11) || empty($criterio_12)
-    ) {
+    // Recolectar criterios
+    $criterios = [];
+    for ($i = 1; $i <= 12; $i++) {
+        $key = "criterio_$i";
+        $criterios[$key] = trim($_POST[$key] ?? '');
+    }
+
+    // Validar campos obligatorios vacíos
+    if (empty($titulo) || empty($descripcion) || in_array('', $criterios, true)) {
         header("Location: ../admin/editar_vacante.php?id=$id&error=" . urlencode("Todos los campos obligatorios deben llenarse"));
         exit();
     }
 
-    // Actualización SQL
+    // Validar longitudes
+    if (strlen($titulo) > 100 || strlen($descripcion) > 500) {
+        header("Location: ../admin/editar_vacante.php?id=$id&error=" . urlencode("Título o descripción exceden el tamaño permitido"));
+        exit();
+    }
+
+    foreach ($criterios as $k => $v) {
+        if (strlen($v) > 100) {
+            header("Location: ../admin/editar_vacante.php?id=$id&error=" . urlencode("El $k excede el tamaño permitido (100 caracteres)"));
+            exit();
+        }
+    }
+
+    // Consulta preparada
     $sql = "UPDATE Vacante SET 
         titulo = ?, descripcion = ?, 
         criterio_1 = ?, criterio_2 = ?, criterio_3 = ?, criterio_4 = ?, criterio_5 = ?, criterio_6 = ?,
@@ -47,24 +51,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-    "ssssssssssssssi", // 14 strings + 1 int
-    $titulo,
-    $descripcion,
-    $criterio_1,
-    $criterio_2,
-    $criterio_3,
-    $criterio_4,
-    $criterio_5,
-    $criterio_6,
-    $criterio_7,
-    $criterio_8,
-    $criterio_9,
-    $criterio_10,
-    $criterio_11,
-    $criterio_12,
-    $id
-);
-
+        "ssssssssssssssi",
+        $titulo,
+        $descripcion,
+        $criterios['criterio_1'],
+        $criterios['criterio_2'],
+        $criterios['criterio_3'],
+        $criterios['criterio_4'],
+        $criterios['criterio_5'],
+        $criterios['criterio_6'],
+        $criterios['criterio_7'],
+        $criterios['criterio_8'],
+        $criterios['criterio_9'],
+        $criterios['criterio_10'],
+        $criterios['criterio_11'],
+        $criterios['criterio_12'],
+        $id
+    );
 
     if ($stmt->execute()) {
         header("Location: ../admin/gestionar_vacantes.php?exito=Vacante actualizada correctamente");

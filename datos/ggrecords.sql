@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS Vacante;
 
 CREATE TABLE Vacante (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
+    titulo VARCHAR(25) NOT NULL,
     descripcion TEXT NOT NULL,
 
     criterio_1 VARCHAR(50) NOT NULL,   
