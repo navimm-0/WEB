@@ -8,8 +8,8 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
     exit();
 }
 
-// Obtener vacantes
-$sql = "SELECT * FROM Vacante ORDER BY fecha_creacion DESC";
+// Obtener vacantes activas
+$sql = "SELECT * FROM Vacante WHERE estado = 'activa' ORDER BY fecha_creacion DESC";
 $resultado = $conn->query($sql);
 ?>
 
@@ -20,9 +20,10 @@ $resultado = $conn->query($sql);
   <title>Vacantes Disponibles – GG Records</title>
   <link rel="stylesheet" href="../reuso/header.css">
   <link rel="stylesheet" href="../reuso/footer.css">
-  <link rel="stylesheet" href="../estilos/ver_vacantes.css">
+  <link rel="stylesheet" href="../estilos/vacantes.css">
 </head>
-<body>
+<body class="index-body">
+
 <header class="barra-superior">
     <div class="contenedor-header">
         <div class="logo-area">
@@ -30,7 +31,7 @@ $resultado = $conn->query($sql);
             <span class="records">RECORDS</span>
         </div>
         <nav class="nav-header">
-            <a href="menu.php">Menú</a>
+            <a href="menu_usuario.php">Menú</a>
             <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
@@ -45,10 +46,10 @@ $resultado = $conn->query($sql);
             <div class="tarjeta-opcion">
                 <h3><?php echo htmlspecialchars($fila['titulo']); ?></h3>
                 <p><strong>Descripción:</strong> <?php echo htmlspecialchars($fila['descripcion']); ?></p>
-                <p><strong>Sueldo mensual:</strong> $<?php echo number_format($fila['criterio_10'], 2); ?></p>
-                <form action="postularse.php" method="POST">
+                <p><strong>Sueldo mensual:</strong> $<?php echo number_format($fila['criterio_10'], 2); ?> MXN</p>
+                <form action="postularse.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id_vacante" value="<?php echo $fila['id']; ?>">
-                    <button type="submit">Aplicar</button>
+                    <button type="submit" class="boton">Aplicar</button>
                 </form>
             </div>
         <?php endwhile; ?>
@@ -69,4 +70,3 @@ $resultado = $conn->query($sql);
 
 </body>
 </html>
-
