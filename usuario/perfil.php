@@ -31,7 +31,7 @@ $datos = $resultado->fetch_assoc();
     <title>Mi Perfil – GG Records</title>
     <link rel="stylesheet" href="../reuso/header.css">
     <link rel="stylesheet" href="../reuso/footer.css">
-    <link rel="stylesheet" href="../estilos/usuario.css"> 
+    <link rel="stylesheet" href="../estilos/perfilUsuario.css"> 
 </head>
 <body>
 
@@ -43,7 +43,7 @@ $datos = $resultado->fetch_assoc();
         </div>
         <nav class="nav-header">
             <a href="../index.php">Inicio</a>
-            <a href="vacantes.php">Vacantes</a>
+            <a href="menu_usuario.php">Menu</a>
             <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
