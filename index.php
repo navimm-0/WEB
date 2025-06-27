@@ -41,7 +41,6 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
     </header>
 
     <div class="contenedor-index grande efecto">
-        <img src="imagenes/logo.png" alt="GG Records" class="logo">
         <h1 class="titulo-principal">Únete a GG Records</h1>
         <p class="descripcion">
             Somos una empresa líder en la <strong>distribución de productos musicales</strong>, comprometida con llevar
