@@ -29,19 +29,24 @@ $resultado = $conn->query($sql);
     session_start();
     ?>
 
-    <header class="barra-superior">
+    <header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
     <div class="contenedor-header">
-        <img src="../imagenes/logo.png" alt="GG Records" class="logo-header">
+        <!-- Logotipo textual al estilo del index -->
+        <div class="logo-area">
+            <span class="gg">GG</span>
+            <span class="records">RECORDS</span>
+        </div>
+
         <nav class="nav-header">
             <?php if (isset($_SESSION['usuario'])): ?>
                 <span class="bienvenida">
                     Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
                     (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
                 </span>
-                <a href="panel.php">Inicio</a>
+                <a href="../index.php">Inicio</a>
                 <a href="vacantes.php">Vacantes</a>
                 <a href="postulaciones.php">Postulaciones</a>
-                <a href="empleados.php">Empleados</a>
+                <a href="dada.php">Aceptados</a>
                 <a href="perfil.php">Perfil</a>
                 <a href="../scripts/logout.php">Cerrar Sesión</a>
             <?php else: ?>
