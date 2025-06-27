@@ -27,6 +27,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
         <nav class="nav-header">
             <a href="../index.php">Inicio</a>
             <a href="menu.php">Menú</a>
+            <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
     </div>
