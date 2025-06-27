@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
                     </span>
                     <a href="../index.php">Inicio</a>
                     <a href="panel.php">Panel Administrador</a>
-                    <a href="vacantes.php">Vacantes</a>
+                    <a href="gestionar_vacantes.php">Vacantes</a>
                     <a href="postulaciones.php">Postulaciones</a>
                     <a href="dada.php">Aceptados</a>
                     <a href="perfil.php">Perfil</a>

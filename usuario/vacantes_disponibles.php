@@ -46,10 +46,10 @@ $resultado = $conn->query($sql);
                 <h3><?php echo htmlspecialchars($fila['titulo']); ?></h3>
                 <p><strong>Descripción:</strong> <?php echo htmlspecialchars($fila['descripcion']); ?></p>
                 <p><strong>Sueldo mensual:</strong> $<?php echo number_format($fila['criterio_10'], 2); ?></p>
-                <form action="postularse.php" method="POST">
-                    <input type="hidden" name="id_vacante" value="<?php echo $fila['id']; ?>">
-                    <button type="submit">Aplicar</button>
-                </form>
+               <form action="subir_cv.php" method="POST">
+    <input type="hidden" name="id_vacante" value="<?php echo $fila['id']; ?>">
+    <button type="submit">Aplicar</button>
+</form>
             </div>
         <?php endwhile; ?>
     <?php else: ?>
@@ -60,7 +60,7 @@ $resultado = $conn->query($sql);
 
 <footer class="pie-pagina">
     <div class="footer-contenido">
-        <!-- contenido footer aquí -->
+
     </div>
     <div class="footer-copy">
         <p>© 2025 GG Records – Todos los derechos reservados.</p>
