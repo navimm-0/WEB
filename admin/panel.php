@@ -70,7 +70,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
             <div class="tarjeta">
                 <h3>Usuarios aceptados</h3>
                 <p>Administra el listado los aplicantes aceptados.</p>
-                <a href="empleados.php" class="boton">Ver</a>
+                <a href="usuarios_aceptados.php" class="boton">Ver</a>
             </div>
              <div class="tarjeta">
                 <h3>Gestionar vacantes</h3>

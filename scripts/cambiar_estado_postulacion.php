@@ -11,21 +11,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = intval($_POST['id_postulacion']);
     $accion = $_POST['accion'];
 
+    // Obtener el id_usuario relacionado con esta postulación
+    $consulta = "SELECT id_usuario FROM postulaciones WHERE id = ?";
+    $stmt = $conn->prepare($consulta);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($id_usuario);
+    $stmt->fetch();
+    $stmt->close();
+
     if ($accion === 'aceptar') {
-        $nuevo_estado = 'aceptada';
+        // 1. Cambiar el estado a 'aceptada'
+        $sql = "UPDATE postulaciones SET estado = 'aceptada' WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 2. Eliminar todas las demás postulaciones de ese usuario
+        $sql_delete = "DELETE FROM postulaciones WHERE id_usuario = ? AND id != ?";
+        $stmt = $conn->prepare($sql_delete);
+        $stmt->bind_param("ii", $id_usuario, $id);
+        $stmt->execute();
+        $stmt->close();
     } elseif ($accion === 'rechazar') {
-        $nuevo_estado = 'rechazada';
-    } else {
-        header("Location: ../admin/postulaciones_admin.php");
-        exit();
+        // Cambiar el estado a 'rechazada'
+        $sql = "UPDATE postulaciones SET estado = 'rechazada' WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
     }
 
-    $sql = "UPDATE postulaciones SET estado = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $nuevo_estado, $id);
-
-    $stmt->execute();
-    header("Location: ../admin/postulaciones_admin.php");
+    header("Location: ../admin/postulaciones.php");
     exit();
 }
 ?>

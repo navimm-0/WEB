@@ -9,15 +9,14 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 $sql = "
     SELECT 
-        p.id,
         u.nombre AS nombre_usuario,
         u.usuario AS username,
         v.titulo AS titulo_vacante,
-        p.fecha_postulacion,
-        p.estado
+        p.fecha_postulacion
     FROM postulaciones p
     INNER JOIN usuarios u ON p.id_usuario = u.id
     INNER JOIN Vacante v ON p.id_vacante = v.id
+    WHERE p.estado = 'aceptada'
     ORDER BY p.fecha_postulacion DESC
 ";
 
@@ -28,10 +27,10 @@ $resultado = $conn->query($sql);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Postulaciones – Panel Admin</title>
+    <title>Usuarios Aceptados – GG Records</title>
     <link rel="stylesheet" href="../reuso/header.css">
     <link rel="stylesheet" href="../reuso/footer.css">
-    <link rel="stylesheet" href="../estilos/postulaciones_admin.css">
+    <link rel="stylesheet" href="../estilos/usuarios_aceptados.css">
 </head>
 <body>
 
@@ -43,64 +42,43 @@ $resultado = $conn->query($sql);
         </div>
         <nav class="nav-header">
             <a href="panel.php">Panel</a>
-            <a href="perfil.php">Perfil</a>
+            <a href="postulaciones.php">Postulaciones</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
     </div>
 </header>
 
 <main class="contenido-admin">
-    <h1>Solicitudes de Postulación</h1>
+    <h1>Usuarios Aceptados</h1>
+
+    <div class="acciones-admin">
+        <a href="panel.php" class="boton-volver">🔙 Volver al Panel</a>
+    </div>
 
     <?php if ($resultado->num_rows > 0): ?>
-        <table class="tabla-postulaciones">
+        <table class="tabla-aceptados">
             <thead>
                 <tr>
+                    <th>Nombre</th>
                     <th>Usuario</th>
                     <th>Vacante</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th>Fecha de Aceptación</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $resultado->fetch_assoc()): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['nombre_usuario']) . " (" . htmlspecialchars($row['username']) . ")"; ?></td>
+                        <td><?php echo htmlspecialchars($row['nombre_usuario']); ?></td>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
                         <td><?php echo htmlspecialchars($row['titulo_vacante']); ?></td>
                         <td><?php echo htmlspecialchars($row['fecha_postulacion']); ?></td>
-                        <td><?php echo ucfirst($row['estado']); ?></td>
-                        <td>
-    <?php if ($row['estado'] === 'pendiente'): ?>
-        <form action="../scripts/cambiar_estado_postulacion.php" method="POST" style="display:inline;">
-            <input type="hidden" name="id_postulacion" value="<?php echo $row['id']; ?>">
-            <input type="hidden" name="accion" value="aceptar">
-            <button type="submit" class="boton-accion aceptar">✅</button>
-        </form>
-        <form action="../scripts/cambiar_estado_postulacion.php" method="POST" style="display:inline;">
-            <input type="hidden" name="id_postulacion" value="<?php echo $row['id']; ?>">
-            <input type="hidden" name="accion" value="rechazar">
-            <button type="submit" class="boton-accion rechazar">❌</button>
-        </form>
-    <?php endif; ?>
-
-    <form action="../scripts/eliminar_postulacion.php" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta postulación?');">
-        <input type="hidden" name="id_postulacion" value="<?php echo $row['id']; ?>">
-        <button type="submit" class="boton-accion eliminar">🗑</button>
-    </form>
-</td>
-
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p class="mensaje-vacio">No hay postulaciones registradas.</p>
+        <p class="mensaje-vacio">No hay usuarios aceptados aún.</p>
     <?php endif; ?>
-
-<div class="acciones">
-    <a href="panel.php" class="boton-volver">🔙 Volver al Panel</a>
-</div>
 </main>
 
 <footer class="pie-pagina">
@@ -123,7 +101,6 @@ $resultado = $conn->query($sql);
             </div>
         </div>
     </div>
-    
     <div class="footer-copy">
         <p>© 2025 GG Records – Todos los derechos reservados.</p>
     </div>
