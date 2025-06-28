@@ -10,7 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $criterio_1 = trim($_POST['criterio_1'] ?? '');
     $criterio_2 = trim($_POST['criterio_2'] ?? '');
     $criterio_3 = isset($_POST['criterio_3']) && is_numeric($_POST['criterio_3']) ? intval($_POST['criterio_3']) : null;
+
+    // Validar ENUM permitido
     $criterio_4 = trim($_POST['criterio_4'] ?? '');
+    $valores_validos_criterio_4 = ['Alto', 'Medio', 'Bajo'];
+    if (!in_array($criterio_4, $valores_validos_criterio_4)) {
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Valor inválido para criterio_4."));
+        exit();
+    }
+
     $criterio_5 = trim($_POST['criterio_5'] ?? '');
     $criterio_6 = trim($_POST['criterio_6'] ?? '');
     $criterio_7 = trim($_POST['criterio_7'] ?? '');
@@ -46,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $stmt->bind_param(
-        "sssissssssiiis",  // Tipos correctos: s=string, i=int
+        "sssissssssiiis",
         $titulo,
         $descripcion,
         $criterio_1,
