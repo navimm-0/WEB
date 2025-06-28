@@ -34,16 +34,30 @@ $resultado = $conn->query($sql);
 </head>
 <body>
 
-<header class="barra-superior">
+<header class="barra-superior" style="font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;">
     <div class="contenedor-header">
+        <!-- Logotipo textual al estilo del index -->
         <div class="logo-area">
             <span class="gg">GG</span>
             <span class="records">RECORDS</span>
         </div>
+
         <nav class="nav-header">
-            <a href="panel.php">Panel</a>
-            <a href="postulaciones.php">Postulaciones</a>
-            <a href="../scripts/logout.php">Cerrar Sesión</a>
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <span class="bienvenida">
+                    Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+                    (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
+                </span>
+                <a href="../index.php">Inicio</a>
+                <a href="crear_vacante.php">Crear vacantes</a>
+                <a href="gestionar_vacantes.php">Vacantes</a>
+                <a href="postulaciones_admin.php">Postulaciones</a>
+                <a href="perfil.php">Perfil</a>
+                <a href="../scripts/logout.php">Cerrar Sesión</a>
+            <?php else: ?>
+                <a href="../login/login.php">Iniciar sesión</a>
+                <a href="../login/register.php">Registro</a>
+            <?php endif; ?>
         </nav>
     </div>
 </header>

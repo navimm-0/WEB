@@ -39,9 +39,10 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
                     (<?php echo htmlspecialchars($_SESSION['rol']); ?>)
                 </span>
                 <a href="../index.php">Inicio</a>
+                <a href="crear_vacante.php">Crear vacantes</a>
                 <a href="gestionar_vacantes.php">Vacantes</a>
-                <a href="postulaciones.php">Postulaciones</a>
-                <a href="dada.php">Aceptados</a>
+                <a href="postulaciones_admin.php">Postulaciones</a>
+                <a href="usuarios_aceptados.php">Aceptados</a>
                 <a href="perfil.php">Perfil</a>
                 <a href="../scripts/logout.php">Cerrar Sesión</a>
             <?php else: ?>

@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $criterio_2 = trim($_POST['criterio_2'] ?? '');
     $criterio_3 = isset($_POST['criterio_3']) && is_numeric($_POST['criterio_3']) ? intval($_POST['criterio_3']) : null;
 
-    // Validar ENUM permitido
     $criterio_4 = trim($_POST['criterio_4'] ?? '');
     $valores_validos_criterio_4 = ['Alto', 'Medio', 'Bajo'];
     if (!in_array($criterio_4, $valores_validos_criterio_4)) {
@@ -22,13 +21,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $criterio_5 = trim($_POST['criterio_5'] ?? '');
     $criterio_6 = trim($_POST['criterio_6'] ?? '');
     $criterio_7 = trim($_POST['criterio_7'] ?? '');
+
     $criterio_8 = trim($_POST['criterio_8'] ?? '');
+    $valores_si_no = ['Sí', 'No'];
+    if (!in_array($criterio_8, $valores_si_no)) {
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Valor inválido para criterio_8."));
+        exit();
+    }
+
     $criterio_9 = isset($_POST['criterio_9']) && is_numeric($_POST['criterio_9']) ? intval($_POST['criterio_9']) : null;
     $criterio_10 = isset($_POST['criterio_10']) && is_numeric($_POST['criterio_10']) ? intval($_POST['criterio_10']) : null;
-    $criterio_11 = trim($_POST['criterio_11'] ?? '');
-    $criterio_12 = trim($_POST['criterio_12'] ?? '');
 
-    // Validar campos obligatorios
+    $criterio_11 = trim($_POST['criterio_11'] ?? '');
+    if (!in_array($criterio_11, $valores_si_no)) {
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Valor inválido para criterio_11."));
+        exit();
+    }
+
+    $criterio_12 = trim($_POST['criterio_12'] ?? '');
+    if (!in_array($criterio_12, $valores_si_no)) {
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Valor inválido para criterio_12."));
+        exit();
+    }
+
     if (
         empty($titulo) || empty($descripcion) ||
         empty($criterio_1) || empty($criterio_2) || $criterio_3 === null ||
@@ -40,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // Consulta preparada
     $sql = "INSERT INTO Vacante (
         titulo, descripcion,
         criterio_1, criterio_2, criterio_3, criterio_4, criterio_5, criterio_6,
@@ -49,26 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
-        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Error al preparar la consulta: " . $conn->error));
+        header("Location: ../admin/crear_vacante.php?error=" . urlencode("Error al preparar: " . $conn->error));
         exit();
     }
 
-    $stmt->bind_param(
-        "sssissssssiiis",
-        $titulo,
-        $descripcion,
-        $criterio_1,
-        $criterio_2,
-        $criterio_3,
-        $criterio_4,
-        $criterio_5,
-        $criterio_6,
-        $criterio_7,
-        $criterio_8,
-        $criterio_9,
-        $criterio_10,
-        $criterio_11,
-        $criterio_12
+    // Tipos: s = string, i = integer
+    $stmt->bind_param("sssissssssiiss", 
+        $titulo, $descripcion, $criterio_1, $criterio_2, $criterio_3,
+        $criterio_4, $criterio_5, $criterio_6, $criterio_7, $criterio_8,
+        $criterio_9, $criterio_10, $criterio_11, $criterio_12
     );
 
     if ($stmt->execute()) {
