@@ -2,15 +2,29 @@
 session_start();
 require_once("../scripts/conexion.php");
 
-// Verifica que el usuario haya iniciado sesión como usuario
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
     header("Location: ../index.php");
     exit();
 }
 
-// Obtener vacantes activas
-$sql = "SELECT * FROM Vacante WHERE criterio_12 = 'activa' ORDER BY fecha_creacion DESC";
-$resultado = $conn->query($sql);
+$id_usuario = $_SESSION['id'];
+
+// Vacantes activas en las que el usuario NO se ha inscrito aún
+$sql = "
+    SELECT V.* 
+    FROM Vacante V
+    WHERE V.estado = 'activa' 
+    AND NOT EXISTS (
+        SELECT 1 FROM postulaciones P 
+        WHERE P.id_usuario = ? AND P.id_vacante = V.id
+    )
+    ORDER BY V.fecha_creacion DESC
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$resultado = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -44,25 +58,21 @@ $resultado = $conn->query($sql);
     <?php if ($resultado->num_rows > 0): ?>
         <?php while($fila = $resultado->fetch_assoc()): ?>
             <div class="tarjeta-opcion">
-                <h3><?php echo htmlspecialchars($fila['titulo']); ?></h3>
-                <p><strong>Descripción:</strong> <?php echo htmlspecialchars($fila['descripcion']); ?></p>
-                <p><strong>Sueldo mensual:</strong> $<?php echo number_format($fila['criterio_10'], 2); ?></p>
-                <form action="subir_cv.php" method="POST">
-                    <input type="hidden" name="id_vacante" value="<?php echo $fila['id']; ?>">
-                    <button type="submit" class="boton">Aplicar</button>
-                </form>
+                <h3><?= htmlspecialchars($fila['titulo']) ?></h3>
+                <p><strong>Descripción:</strong> <?= htmlspecialchars($fila['descripcion']) ?></p>
+                <p><strong>Sueldo mensual:</strong> $<?= number_format($fila['criterio_10'], 2) ?></p>
+                <!-- Enlace en lugar de formulario -->
+                <a href="subir_cv.php?id_vacante=<?= $fila['id'] ?>" class="boton">Aplicar</a>
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <p>No hay vacantes disponibles en este momento.</p>
+        <p>No hay vacantes disponibles en este momento o ya aplicaste a todas.</p>
     <?php endif; ?>
   </div>
 </main>
 
 <footer class="pie-pagina">
-    <div class="footer-contenido">
-        <!-- contenido footer aquí -->
-    </div>
+    <div class="footer-contenido"></div>
     <div class="footer-copy">
         <p>© 2025 GG Records – Todos los derechos reservados.</p>
     </div>
