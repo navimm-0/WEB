@@ -65,7 +65,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
             <div class="tarjeta">
                 <h3>Postulaciones</h3>
                 <p>Revisa quién ha aplicado a las vacantes.</p>
-                <a href="postulados.php" class="boton">Ver Postulaciones</a>
+                <a href="postulaciones_admin.php" class="boton">Ver Postulaciones</a>
             </div>
             <div class="tarjeta">
                 <h3>Usuarios aceptados</h3>
