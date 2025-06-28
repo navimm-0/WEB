@@ -34,7 +34,7 @@ session_start(); // Iniciamos la sesión para poder acceder a $_SESSION
                 <?php else: ?>
                     <a href="login/login.php">Iniciar sesión</a>
                     <a href="login/register.php">Registro</a>
-                    <a href="usuario/vacantes.php">Vacantes</a>
+                    <a href="usuario/vacantes_disponibles.php">Vacantes</a>
                 <?php endif; ?>
             </nav>
         </div>
