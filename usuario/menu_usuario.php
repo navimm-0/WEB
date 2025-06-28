@@ -47,7 +47,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
             <p>Revisa tus vacantes solicitadas.</p>
         </a>
 
-        <a href="editar_solicitudes.php" class="tarjeta-opcion">
+        <a href="editar_soli.php" class="tarjeta-opcion">
             <h2>✏️ Editar Solicitudes</h2>
             <p>Modifica o cancela tus solicitudes.</p>
         </a>

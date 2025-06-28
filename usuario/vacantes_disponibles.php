@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
 }
 
 // Obtener vacantes activas
-$sql = "SELECT * FROM Vacante WHERE estado = 'activa' ORDER BY fecha_creacion DESC";
+$sql = "SELECT * FROM Vacante WHERE criterio_12 = 'activa' ORDER BY fecha_creacion DESC";
 $resultado = $conn->query($sql);
 ?>
 
