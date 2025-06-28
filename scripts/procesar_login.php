@@ -11,6 +11,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
+    // ✅ Usuarios fijos sin base de datos
+    if ($usuario === 'admin' && $contrasena === '123') {
+        $_SESSION['id_usuario'] = -1; // ID ficticio
+        $_SESSION['rol'] = 'admin';
+        $_SESSION['usuario'] = 'admin';
+        header("Location: ../admin/panel.php");
+        exit();
+    }
+
+    if ($usuario === 'usuario' && $contrasena === '123') {
+        $_SESSION['id_usuario'] = -2; // ID ficticio
+        $_SESSION['rol'] = 'usuario';
+        $_SESSION['usuario'] = 'usuario';
+        header("Location: ../usuario/bienvenida.php");
+        exit();
+    }
+
+    // 🔍 Validar contra base de datos
     $sql = "SELECT * FROM usuarios WHERE usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $usuario);
