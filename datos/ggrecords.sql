@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS `Vacante`;
 CREATE TABLE `Vacante` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(100) NOT NULL,
+  `titulo` VARCHAR(25) NOT NULL,
   `descripcion` TEXT NOT NULL,
   `criterio_1` VARCHAR(50) NOT NULL,
   `criterio_2` VARCHAR(100) NOT NULL,
