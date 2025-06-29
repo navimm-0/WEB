@@ -29,7 +29,7 @@ if (isset($_SESSION['rol'])) {
             </div>
             <nav class="nav-header">
                 <a href="../index.php">Inicio</a>
-                <a href="menu.php">Menú</a>
+                <a href="menu_usuario.php">Menú</a>
             </nav>
         </div>
     </header>

@@ -21,7 +21,7 @@ CREATE TABLE `usuarios` (
   COLLATE=utf8mb4_general_ci;
 
 -- Tabla: vacante
-CREATE TABLE `vacante` (
+CREATE TABLE `Vacante` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(100) NOT NULL,
   `descripcion` TEXT NOT NULL,

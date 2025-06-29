@@ -28,26 +28,10 @@ if (isset($_GET['eliminar'])) {
     exit();
 }
 
-// Actualizar CV si se envió uno nuevo
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_postulacion']) && isset($_FILES['cv'])) {
-    $id_postulacion = intval($_POST['id_postulacion']);
-    $cv = $_FILES['cv'];
-
-    if ($cv['error'] === 0 && pathinfo($cv['name'], PATHINFO_EXTENSION) === 'pdf' && $cv['type'] === 'application/pdf') {
-        $nombreNuevoCV = uniqid("cv_", true) . ".pdf";
-        $rutaDestino = "../uploads/" . $nombreNuevoCV;
-        move_uploaded_file($cv['tmp_name'], $rutaDestino);
-
-        $stmt = $conn->prepare("UPDATE postulaciones SET cv_pdf = ? WHERE id = ? AND id_usuario = ?");
-        $stmt->bind_param("sii", $nombreNuevoCV, $id_postulacion, $usuario_id);
-        $stmt->execute();
-        $stmt->close();
-    }
-}
-
 // Obtener todas las postulaciones del usuario
 $stmt = $conn->prepare("
-    SELECT p.id, v.titulo, p.fecha_postulacion, p.estado, p.cv_pdf
+    SELECT p.id, v.titulo, p.fecha_postulacion, p.estado,
+           p.telefono, p.direccion, p.horario_preferido, p.observaciones
     FROM postulaciones p
     JOIN Vacante v ON p.id_vacante = v.id
     WHERE p.id_usuario = ?
@@ -65,7 +49,7 @@ $resultado = $stmt->get_result();
     <title>Mis Postulaciones – GG Records</title>
     <link rel="stylesheet" href="../reuso/header.css">
     <link rel="stylesheet" href="../reuso/footer.css">
-    <link rel="stylesheet" href="../estilos/menu_usuario.css">
+    <link rel="stylesheet" href="../estilos/postulaciones.css">
 </head>
 <body>
 <header class="barra-superior">
@@ -75,33 +59,36 @@ $resultado = $stmt->get_result();
             <span class="records">RECORDS</span>
         </div>
         <nav class="nav-header">
-            <a href="menu.php">Menú</a>
+            <a href="menu_usuario.php">Menú</a>
+            <a href="vacantes_disponibles.php">Vacantes</a>
             <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
     </div>
 </header>
 
-<main class="contenido-usuario">
-    <h2>Mis Postulaciones</h2>
-    <div class="tarjetas-usuario">
+<main class="contenido-admin">
+    <h1>Mis Postulaciones</h1>
+    <div class="tarjetas-panel">
         <?php while ($row = $resultado->fetch_assoc()): ?>
-            <div class="tarjeta-opcion" style="font-size: 0.9rem;">
+            <div class="tarjeta">
                 <h3><?php echo htmlspecialchars($row['titulo']); ?></h3>
                 <p><strong>Estado:</strong> <?php echo htmlspecialchars($row['estado']); ?></p>
                 <p><strong>Fecha:</strong> <?php echo htmlspecialchars($row['fecha_postulacion']); ?></p>
-                <p><a href="../uploads/<?php echo htmlspecialchars($row['cv_pdf']); ?>" target="_blank">📄 Ver CV</a></p>
+                <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($row['telefono']); ?></p>
+                <p><strong>Dirección:</strong> <?php echo htmlspecialchars($row['direccion']); ?></p>
+                <p><strong>Horario:</strong> <?php echo htmlspecialchars($row['horario_preferido']); ?></p>
+                <p><strong>Observaciones:</strong> <?php echo nl2br(htmlspecialchars($row['observaciones'])); ?></p>
 
-                <form method="POST" enctype="multipart/form-data" style="margin-top:1rem;">
-                    <input type="hidden" name="id_postulacion" value="<?php echo $row['id']; ?>">
-                    <input type="file" name="cv" accept="application/pdf" required>
-                    <button type="submit">Actualizar CV</button>
-                </form>
-
-                <a href="editar_soli.php?eliminar=<?php echo $row['id']; ?>" onclick="return confirm('¿Eliminar esta postulación?');" style="color:red; display:block; margin-top:0.5rem;">🗑 Eliminar</a>
+                <a href="editar_postulacion.php?id=<?php echo $row['id']; ?>" class="boton">✏️ Editar Datos</a>
+                <a href="editar_soli.php?eliminar=<?php echo $row['id']; ?>" onclick="return confirm('¿Eliminar esta postulación?');" class="boton boton-secundario" style="margin-top: 1rem;">🗑 Eliminar</a>
             </div>
         <?php endwhile; ?>
     </div>
+        <div style="text-align: center; margin-top: 2rem;">
+        <a href="menu_usuario.php" class="boton-volver">🔙 Volver al Menú</a>
+    </div>
+
 </main>
 
 <footer class="pie-pagina">

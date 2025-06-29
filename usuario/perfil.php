@@ -42,8 +42,9 @@ $datos = $resultado->fetch_assoc();
             <span class="records">RECORDS</span>
         </div>
         <nav class="nav-header">
-            <a href="../index.php">Inicio</a>
-            <a href="menu_usuario.php">Menu</a>
+            <a href="menu_usuario.php">Menú</a>
+            <a href="editar_soli.php">Postulaciones</a>
+            <a href="vacantes_disponibles.php">Vacantes</a>
             <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
@@ -81,49 +82,51 @@ $datos = $resultado->fetch_assoc();
 
         <div class="acciones">
             <button type="submit" class="boton">Actualizar Perfil</button>
-            <a href="vacantes.php" class="boton boton-secundario">Cancelar</a>
+            <a href="menu_usuario.php" class="boton boton-secundario">Cancelar</a>
         </div>
     </form>
 </main>
 
-<footer class="pie-pagina">
-    <div class="footer-contenido">
-        <div class="footer-col">
-            <h4>GG Records</h4>
-            <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.</p>
-        </div>
 
-        <div class="footer-col">
-            <h4>Contacto</h4>
-            <p>Email: contacto@ggrecords.com</p>
-            <p>Tel: +52 55 1234 5678</p>
-            <p>Ubicación: Ciudad de México</p>
-        </div>
+    <footer class="pie-pagina">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <h4>GG Records</h4>
+                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
+                </p>
+            </div>
 
-        <div class="footer-col">
-            <h4>Enlaces útiles</h4>
-            <ul>
-                <?php if (!isset($_SESSION['usuario'])): ?>
-                    <li><a href="login/login.php">Iniciar Sesión</a></li>
-                    <li><a href="login/register.php">Registrarse</a></li>
-                <?php endif; ?>
-                <li><a href="vacantes.php">Ver Vacantes</a></li>
-            </ul>
-        </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>Email: contacto@ggrecords.com</p>
+                <p>Tel: +52 55 1234 5678</p>
+                <p>Ubicación: Ciudad de México</p>
+            </div>
 
-        <div class="footer-col">
-            <h4>Síguenos</h4>
-            <div class="redes-sociales">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">Twitter</a>
+            <div class="footer-col">
+                <h4>Enlaces útiles</h4>
+                <ul>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <li><a href="login/login.php">Iniciar Sesión</a></li>
+                        <li><a href="login/register.php">Registrarse</a></li>
+                    <?php endif; ?>
+                    <li><a href="usuario/vacantes.php">Ver Vacantes</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="redes-sociales">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer-copy">
-        <p>© 2025 GG Records – Todos los derechos reservados.</p>
-    </div>
-</footer>
+        <div class="footer-copy">
+            <p>© 2025 GG Records – Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>

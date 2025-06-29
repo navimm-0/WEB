@@ -9,15 +9,15 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'usuario') {
 
 $id_usuario = $_SESSION['id'];
 
-// Vacantes activas en las que el usuario NO se ha inscrito aún
+// Obtener todas las vacantes activas y si el usuario ya aplicó
 $sql = "
-    SELECT V.* 
+    SELECT V.*, 
+           EXISTS (
+               SELECT 1 FROM postulaciones P 
+               WHERE P.id_usuario = ? AND P.id_vacante = V.id
+           ) AS ya_postulado
     FROM Vacante V
-    WHERE V.estado = 'activa' 
-    AND NOT EXISTS (
-        SELECT 1 FROM postulaciones P 
-        WHERE P.id_usuario = ? AND P.id_vacante = V.id
-    )
+    WHERE V.estado = 'activa'
     ORDER BY V.fecha_creacion DESC
 ";
 
@@ -46,6 +46,7 @@ $resultado = $stmt->get_result();
         </div>
         <nav class="nav-header">
             <a href="menu_usuario.php">Menú</a>
+            <a href="editar_soli.php">Postulaciones</a>
             <a href="perfil.php">Perfil</a>
             <a href="../scripts/logout.php">Cerrar Sesión</a>
         </nav>
@@ -54,6 +55,9 @@ $resultado = $stmt->get_result();
 
 <main class="contenido-usuario">
   <h1>Vacantes Disponibles</h1>
+
+  <a href="menu_usuario.php" class="boton boton-volver">🔙 Volver</a>
+
   <div class="tarjetas-usuario">
     <?php if ($resultado->num_rows > 0): ?>
         <?php while($fila = $resultado->fetch_assoc()): ?>
@@ -61,22 +65,70 @@ $resultado = $stmt->get_result();
                 <h3><?= htmlspecialchars($fila['titulo']) ?></h3>
                 <p><strong>Descripción:</strong> <?= htmlspecialchars($fila['descripcion']) ?></p>
                 <p><strong>Sueldo mensual:</strong> $<?= number_format($fila['criterio_10'], 2) ?></p>
-                <!-- Enlace en lugar de formulario -->
-                <a href="subir_cv.php?id_vacante=<?= $fila['id'] ?>" class="boton">Aplicar</a>
+
+                <?php if ($fila['ya_postulado']): ?>
+                    <div class="tooltip">
+                        <button class="boton deshabilitado" disabled>Postulado</button>
+                        <span class="tooltip-text">✅ Ya te postulaste</span>
+                    </div>
+                <?php else: ?>
+                    <form action="formulario_aplicacion.php" method="POST">
+                        <input type="hidden" name="id_vacante" value="<?= $fila['id'] ?>">
+                        <button type="submit" class="boton">Aplicar</button>
+                    </form>
+                <?php endif; ?>
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <p>No hay vacantes disponibles en este momento o ya aplicaste a todas.</p>
+        <p>No hay vacantes disponibles en este momento.</p>
     <?php endif; ?>
   </div>
 </main>
 
-<footer class="pie-pagina">
-    <div class="footer-contenido"></div>
-    <div class="footer-copy">
-        <p>© 2025 GG Records – Todos los derechos reservados.</p>
-    </div>
-</footer>
+
+
+
+
+    <footer class="pie-pagina">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <h4>GG Records</h4>
+                <p>Distribuidora nacional de productos musicales. Conectamos talento, tecnología y pasión por la música.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>Email: contacto@ggrecords.com</p>
+                <p>Tel: +52 55 1234 5678</p>
+                <p>Ubicación: Ciudad de México</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Enlaces útiles</h4>
+                <ul>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <li><a href="login/login.php">Iniciar Sesión</a></li>
+                        <li><a href="login/register.php">Registrarse</a></li>
+                    <?php endif; ?>
+                    <li><a href="usuario/vacantes.php">Ver Vacantes</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="redes-sociales">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copy">
+            <p>© 2025 GG Records – Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
 </body>
 </html>

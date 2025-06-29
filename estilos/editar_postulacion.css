@@ -1,0 +1,115 @@
+/* estilos/editar_postulacion.css */
+
+body {
+    background-color: #0d0d0d;
+    color: #f5f5f5;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    margin: 2px;
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main.contenido-admin {
+    background: linear-gradient(to right, #1a1a1a, #262626);
+    padding: 3rem 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+    width: 95%;
+    max-width: 800px;
+    text-align: center;
+    margin-top: 2rem;
+    transition: transform 0.3s ease;
+}
+
+main.contenido-admin:hover {
+    transform: scale(1.02);
+}
+
+main.contenido-admin h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+form {
+    width: 100%;
+    text-align: left;
+    margin-top: 2rem;
+}
+
+form label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+form input[type="text"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #ff4c29;
+    outline: none;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.boton {
+    display: inline-block;
+    background-color: #ff4c29;
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    margin-top: 2rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
+    box-shadow: 0 0 12px rgba(255, 76, 41, 0.3);
+}
+
+.boton:hover {
+    background-color: #e13f1f;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(255, 76, 41, 0.5);
+}
+.boton-volver {
+    display: inline-block;
+    margin: 2rem auto 0;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    padding: 0.9rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton-volver:hover {
+    background-color: #444;
+    transform: scale(1.03);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
